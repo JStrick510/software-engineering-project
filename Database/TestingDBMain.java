@@ -6,6 +6,7 @@ public class TestingDBMain {
 		// TODO Auto-generated method stub
 		DatabaseManager DBM = new DatabaseManager();
         System.out.println("test");
+        DBM.closeDB();
 	}
 
 }

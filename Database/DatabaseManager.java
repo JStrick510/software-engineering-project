@@ -6,29 +6,118 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.*;
 
+/*
+PaitentChart: SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID
+TreatmentChart: ChartID, Height, Weight, BloodPressure, VisitReason, TreatmentContent, Prescription, PatientID
+PaymentInfo: ReferenceNumber, Name, Date, Amount, PaymentType, PatientID
+Report: ReportDate, DoctorName, NumberPatients, AmountEarned
+*/
+
 public class DatabaseManager {
+	
+	private ArrayList<String[]> patientChart;
+	private ArrayList<String[]> treatmentChart;
+	private ArrayList<String[]> paymentInfo;
+	private ArrayList<String[]> report;
 	
 	public DatabaseManager()
     {
         //will create new csv for all databases if one doesnt already exist
-		File patientChart = new File("patientChart.csv");
-		File treatmentChart = new File("treatmentChart.csv");
-		File paymentInfo = new File("paymentInfo.csv");
-		File report = new File("report.csv");
+		File patientChartFile = new File("patientChart.csv");
+		File treatmentChartFile = new File("treatmentChart.csv");
+		File paymentInfoFile = new File("paymentInfo.csv");
+		File reportFile = new File("report.csv");
 		try 
 		{
-			patientChart.createNewFile();
-			treatmentChart.createNewFile();
-			paymentInfo.createNewFile();
-			report.createNewFile();
+			patientChartFile.createNewFile();
+			treatmentChartFile.createNewFile();
+			paymentInfoFile.createNewFile();
+			reportFile.createNewFile();
 		} 
 		catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
+		
+		//set the csv values to the arraylists if files arent empty
+		if(patientChartFile.length() != 0)
+			this.patientChart = readCSV(patientChartFile);
+		if(treatmentChartFile.length() != 0)
+			this.treatmentChart = readCSV(treatmentChartFile);
+		if(paymentInfoFile.length() != 0)
+			this.paymentInfo = readCSV(paymentInfoFile);
+		if(reportFile.length() != 0)
+			this.report = readCSV(reportFile);
     }
+	
+	public void closeDB()
+	{
+		if(patientChart != null) //assuming that databases will never be empty at the end, but just in case
+		{
+			ArrayList<String> patientChartContent = new ArrayList<String>();
+			
+			for(int a = 0; a < patientChart.size(); a++)
+			{
+				String concArray = "";
+				for(int i = 0; i < patientChart.get(a).length; i++)
+					concArray = concArray + ", " + patientChart.get(a)[i];
+				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				patientChartContent.add(concArray);
+			}
+			
+			writeCSV("patientChart.csv", patientChartContent);
+		}
+		
+		if(treatmentChart != null) //assuming that databases will never be empty at the end, but just in case
+		{
+			ArrayList<String> treatmentChartContent = new ArrayList<String>();
+			
+			for(int a = 0; a < treatmentChart.size(); a++)
+			{
+				String concArray = "";
+				for(int i = 0; i < treatmentChart.get(a).length; i++)
+					concArray = concArray + ", " + treatmentChart.get(a)[i];
+				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				treatmentChartContent.add(concArray);
+			}
+			
+			writeCSV("treatmentChart.csv", treatmentChartContent);
+		}
+		
+		if(paymentInfo != null) //assuming that databases will never be empty at the end, but just in case
+		{
+			ArrayList<String> paymentInfoContent = new ArrayList<String>();
+			
+			for(int a = 0; a < paymentInfo.size(); a++)
+			{
+				String concArray = "";
+				for(int i = 0; i < paymentInfo.get(a).length; i++)
+					concArray = concArray + ", " + paymentInfo.get(a)[i];
+				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				paymentInfoContent.add(concArray);
+			}
+			
+			writeCSV("paymentInfo.csv", paymentInfoContent);
+		}
+		
+		if(report != null) //assuming that databases will never be empty at the end, but just in case
+		{
+			ArrayList<String> reportContent = new ArrayList<String>();
+			
+			for(int a = 0; a < report.size(); a++)
+			{
+				String concArray = "";
+				for(int i = 0; i < report.get(a).length; i++)
+					concArray = concArray + ", " + report.get(a)[i];
+				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				reportContent.add(concArray);
+			}
+			
+			writeCSV("report.csv", reportContent);
+		}
+	}
     
-    public ArrayList<String[]> readCSV(String fileName)
+    public ArrayList<String[]> readCSV(File fileName)
     {
         String line = "";
         String splitBy = ",";
@@ -52,25 +141,106 @@ public class DatabaseManager {
         return values;
     }
     
-    public void writeCSV(String fileName, ArrayList<String> line) throws IOException
+    public void writeCSV(String fileName, ArrayList<String> line)
     {
-    	FileWriter writer = new FileWriter(fileName);
-    	String total = "";
-        for(String item : line) //concatenate all the values to one csv line
-        {
-        	total = total + ", " + item;
-        }
-        total = total.substring(2,total.length()); //to get rid of the first ", " probably a better way to write this
-        writer.append(total);
-        writer.close();
+    	try
+    	{
+	    	FileWriter writer = new FileWriter(fileName);
+	        for(String item : line)
+	        	writer.write(item);
+	        writer.close();
+    	}
+    	catch(IOException e)
+    	{
+    		e.printStackTrace();
+    	}
     }
     
-    public String[] getInfo(String fileName, String identifier)
+    public String getPatientChartData(String identifier, int index)
     {
-        ArrayList<String[]> data = readCSV(fileName);
+    	//PaitentChart: 0-SSN, 1-PatientID, 2-Email, 3-PhoneNumber, 4-HealthCondition, 5-Name, 6-Address, 7-InsuranceName, 8-ChartID
         String[] match = null;
         
-        for(String[] line : data)
+        for(String[] line : patientChart)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        if(match.equals(null))
+        	return "ERROR";
+        else
+        	return match[index];
+    }
+    
+    public String getTreatmentChartData(String identifier, int index)
+    {
+    	//TreatmentChart: 0-ChartID, 1-Height, 2-Weight, 3-BloodPressure, 4-VisitReason, 5-TreatmentContent, 6-Prescription, 7-PatientID
+        String[] match = null;
+        
+        for(String[] line : treatmentChart)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        if(match.equals(null))
+        	return "ERROR";
+        else
+        	return match[index];
+    }
+    
+    public String getPaymentInfoData(String identifier, int index)
+    {
+    	//PaymentInfo: 0-ReferenceNumber, 1-Name, 2-Date, 3-Amount, 4-PaymentType, 5-PatientID
+        String[] match = null;
+        
+        for(String[] line : paymentInfo)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        if(match.equals(null))
+        	return "ERROR";
+        else
+        	return match[index];
+    }
+
+    public String getReportData(String identifier, int index)
+    {
+    	//Report: 0-ReportDate, 1-DoctorName, 2-NumberPatients, 3-AmountEarned
+        String[] match = null;
+        
+        for(String[] line : report)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        if(match.equals(null))
+        	return "ERROR";
+        else
+        	return match[index];
+    }
+
+    public String[] getPatientChartLine(String identifier, int index)
+    {
+        String[] match = null;
+        
+        for(String[] line : patientChart)
         {
             if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
             {
@@ -81,5 +251,53 @@ public class DatabaseManager {
         
         return match;
     }
-
+    
+    public String[] getTreamentChartLine(String identifier, int index)
+    {
+    	String[] match = null;
+        
+        for(String[] line : treatmentChart)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        return match;
+    }
+    
+    public String[] getPaymentInfoLine(String identifier, int index)
+    {
+    	String[] match = null;
+        
+        for(String[] line : paymentInfo)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        return match;
+    }
+    
+    public String[] getReportLine(String identifier, int index)
+    {
+    	String[] match = null;
+        
+        for(String[] line : report)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        return match;
+    }
+    
 }
