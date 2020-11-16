@@ -22,6 +22,12 @@ public class DatabaseManager {
 	
 	public DatabaseManager()
     {
+		//initialize arraylists
+		patientChart = new ArrayList<String[]>();
+		treatmentChart = new ArrayList<String[]>();
+		paymentInfo = new ArrayList<String[]>();
+		report = new ArrayList<String[]>();
+		
         //will create new csv for all databases if one doesnt already exist
 		File patientChartFile = new File("patientChart.csv");
 		File treatmentChartFile = new File("treatmentChart.csv");
@@ -170,7 +176,7 @@ public class DatabaseManager {
             }
         }
         
-        if(match.equals(null))
+        if(match == null)
         	return "ERROR";
         else
         	return match[index];
@@ -190,7 +196,7 @@ public class DatabaseManager {
             }
         }
         
-        if(match.equals(null))
+        if(match == null)
         	return "ERROR";
         else
         	return match[index];
@@ -210,7 +216,7 @@ public class DatabaseManager {
             }
         }
         
-        if(match.equals(null))
+        if(match == null)
         	return "ERROR";
         else
         	return match[index];
@@ -230,13 +236,13 @@ public class DatabaseManager {
             }
         }
         
-        if(match.equals(null))
+        if(match == null)
         	return "ERROR";
         else
         	return match[index];
     }
 
-    public String[] getPatientChartLine(String identifier, int index)
+    public String[] getPatientChartLine(String identifier)
     {
         String[] match = null;
         
@@ -252,7 +258,7 @@ public class DatabaseManager {
         return match;
     }
     
-    public String[] getTreamentChartLine(String identifier, int index)
+    public String[] getTreatmentChartLine(String identifier)
     {
     	String[] match = null;
         
@@ -268,7 +274,7 @@ public class DatabaseManager {
         return match;
     }
     
-    public String[] getPaymentInfoLine(String identifier, int index)
+    public String[] getPaymentInfoLine(String identifier)
     {
     	String[] match = null;
         
@@ -284,7 +290,7 @@ public class DatabaseManager {
         return match;
     }
     
-    public String[] getReportLine(String identifier, int index)
+    public String[] getReportLine(String identifier)
     {
     	String[] match = null;
         
@@ -298,6 +304,78 @@ public class DatabaseManager {
         }
         
         return match;
+    }
+    
+    public void addPaitentChart(String SSN, String PatientID, String Email, String PhoneNumber, String HealthCondition, String Name, String Address, String InsuranceName, String ChartID)
+    {
+    	String[] a = {SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID};
+    	patientChart.add(a);
+    }
+    
+    public void addTreatmentChart(String ChartID, String Height, String Weight, String BloodPressure, String VisitReason, String TreatmentContent, String Prescription, String PatientID)
+    {
+    	String[] a = {ChartID, Height, Weight, BloodPressure, VisitReason, TreatmentContent, Prescription, PatientID};
+    	treatmentChart.add(a);    	
+    }
+    
+    public void addPaymentInfo(String ReferenceNumber, String Name, String Date, String Amount, String PaymentType, String PatientID)
+    {
+    	String[] a = {ReferenceNumber, Name, Date, Amount, PaymentType, PatientID};
+    	paymentInfo.add(a);    	
+    }
+    
+    public void addReport(String ReportDate, String DoctorName, String NumberPatients, String AmountEarned)
+    {
+    	String[] a = {ReportDate, DoctorName, NumberPatients, AmountEarned};
+    	report.add(a);    	
+    }
+    
+    public void deletePatientChart(String identifier)
+    {
+    	for(String[] line : patientChart)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                patientChart.remove(line);
+                break;
+            }
+        }
+    }
+    
+    public void deleteTreatmentChart(String identifier)
+    {
+    	for(String[] line : treatmentChart)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                treatmentChart.remove(line);
+                break;
+            }
+        }
+    }
+    
+    public void deletePaymentInfo(String identifier)
+    {
+    	for(String[] line : paymentInfo)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+            	paymentInfo.remove(line);
+                break;
+            }
+        }
+    }
+    
+    public void deleteReport(String identifier)
+    {
+    	for(String[] line : report)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+            	report.remove(line);
+                break;
+            }
+        }
     }
     
 }
