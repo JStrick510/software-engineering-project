@@ -1,38 +1,39 @@
+import java.util.*;
 public class AppointmentManager
 {
-    String m_patientName;
-    String m_doctorName;
-    //TODO: Date class?
-    //TODO: Going to change this class to house the dictionaries for patients and doctors which will have their own class
-    AppointmentManager(String patientName, String doctorName)
-    {
-        this.m_patientName = patientName;
-        this.m_doctorName = doctorName;
-    }
+    
+    Hashtable<String, Doctor> doctorsList = new Hashtable<String, Doctor>();
+    Hashtable<String, Patient> patientList = new Hashtable<String, Patient>();
 
+
+
+    //TODO: Date class?
+    //TODO: Add functionality for checking/adding appointments for individual Doctor objects
     AppointmentManager()
     {
-        this.m_patientName = "";
-        this.m_doctorName = "";
+       
     }
 
-    String getPatientName()
+    //Method for adding Doctor to the list 
+    void addDoctor(String doctorName)
     {
-        return this.m_patientName;
+        doctorsList.put(doctorName, new Doctor(doctorName));
     }
+    //Method for retreiving Doctor from list based on name
+    Doctor getDoctor(String doctorName)
+    {
+        return doctorsList.get(doctorName);
 
-    String getDoctorName()
-    {
-        return this.m_doctorName;
     }
-
-    void setPatientName(String patientName)
+    //Method for adding Patient to the list 
+    void addPatient(String patientName)
     {
-        this.m_patientName = patientName;
+        patientList.put(patientName, new Patient(patientName));
     }
-
-    void setDoctorName(String doctorName)
+    //Method for retreiving patient from the list based on name
+    Patient getPateint(String patientName)
     {
-        this.m_doctorName = doctorName;
+        return patientList.get(patientName);
     }
+    
 }
