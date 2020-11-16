@@ -3,6 +3,7 @@ public class AppointmentManager
     String m_patientName;
     String m_doctorName;
     //TODO: Date class?
+    //TODO: Going to change this class to house the dictionaries for patients and doctors which will have their own class
     AppointmentManager(String patientName, String doctorName)
     {
         this.m_patientName = patientName;
