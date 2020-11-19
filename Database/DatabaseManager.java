@@ -68,6 +68,10 @@ public class DatabaseManager {
 			this.paymentInfo = readCSV(paymentInfoFile);
 		if(reportFile.length() != 0)
 			this.report = readCSV(reportFile);
+		if(logInFile.length() != 0)
+			this.logInInfo = readCSV(logInFile);
+		if(doctorScheduleFile.length() != 0)
+			this.doctorSchedule = readCSV(doctorScheduleFile);
     }
 	
 	public void closeDB()
