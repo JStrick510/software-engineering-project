@@ -10,7 +10,9 @@ import java.io.*;
 PaitentChart: SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID
 TreatmentChart: ChartID, Height, Weight, BloodPressure, VisitReason, TreatmentContent, Prescription, PatientID
 PaymentInfo: ReferenceNumber, Name, Date, Amount, PaymentType, PatientID
-Report: ReportDate, DoctorName, NumberPatients, AmountEarned
+Report: ReportDate, EmployeeID, NumberPatients, AmountEarned
+LogInInfo: EmployeeID, Password, Role
+DoctorSchedule: PatientID, Time, EmployeeID
 */
 
 public class DatabaseManager {
@@ -19,6 +21,10 @@ public class DatabaseManager {
 	private ArrayList<String[]> treatmentChart;
 	private ArrayList<String[]> paymentInfo;
 	private ArrayList<String[]> report;
+	private ArrayList<String[]> logInInfo;
+	private ArrayList<String[]> doctorSchedule;
+	
+	private ArrayList<String> currentLogIn;
 	
 	public DatabaseManager()
     {
@@ -27,18 +33,26 @@ public class DatabaseManager {
 		treatmentChart = new ArrayList<String[]>();
 		paymentInfo = new ArrayList<String[]>();
 		report = new ArrayList<String[]>();
+		logInInfo = new ArrayList<String[]>();
+		doctorSchedule = new ArrayList<String[]>();
+		
+		currentLogIn = new ArrayList<String>();
 		
         //will create new csv for all databases if one doesnt already exist
 		File patientChartFile = new File("patientChart.csv");
 		File treatmentChartFile = new File("treatmentChart.csv");
 		File paymentInfoFile = new File("paymentInfo.csv");
 		File reportFile = new File("report.csv");
+		File logInFile = new File("logInInfo.csv");
+		File doctorScheduleFile = new File("doctorSchedule.csv");
 		try 
 		{
 			patientChartFile.createNewFile();
 			treatmentChartFile.createNewFile();
 			paymentInfoFile.createNewFile();
 			reportFile.createNewFile();
+			logInFile.createNewFile();
+			doctorScheduleFile.createNewFile();
 		} 
 		catch (IOException e) 
 		{
@@ -54,6 +68,10 @@ public class DatabaseManager {
 			this.paymentInfo = readCSV(paymentInfoFile);
 		if(reportFile.length() != 0)
 			this.report = readCSV(reportFile);
+		if(logInFile.length() != 0)
+			this.logInInfo = readCSV(logInFile);
+		if(doctorScheduleFile.length() != 0)
+			this.doctorSchedule = readCSV(doctorScheduleFile);
     }
 	
 	public void closeDB()
@@ -68,6 +86,7 @@ public class DatabaseManager {
 				for(int i = 0; i < patientChart.get(a).length; i++)
 					concArray = concArray + ", " + patientChart.get(a)[i];
 				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				concArray = concArray + "\n"; //so next entry is on next line
 				patientChartContent.add(concArray);
 			}
 			
@@ -84,6 +103,7 @@ public class DatabaseManager {
 				for(int i = 0; i < treatmentChart.get(a).length; i++)
 					concArray = concArray + ", " + treatmentChart.get(a)[i];
 				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				concArray = concArray + "\n"; //so next entry is on next line
 				treatmentChartContent.add(concArray);
 			}
 			
@@ -100,6 +120,7 @@ public class DatabaseManager {
 				for(int i = 0; i < paymentInfo.get(a).length; i++)
 					concArray = concArray + ", " + paymentInfo.get(a)[i];
 				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				concArray = concArray + "\n"; //so next entry is on next line
 				paymentInfoContent.add(concArray);
 			}
 			
@@ -116,10 +137,45 @@ public class DatabaseManager {
 				for(int i = 0; i < report.get(a).length; i++)
 					concArray = concArray + ", " + report.get(a)[i];
 				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				concArray = concArray + "\n"; //so next entry is on next line
 				reportContent.add(concArray);
 			}
 			
 			writeCSV("report.csv", reportContent);
+		}
+		
+		if(logInInfo != null) //assuming that databases will never be empty at the end, but just in case
+		{
+			ArrayList<String> logInInfoContent = new ArrayList<String>();
+			
+			for(int a = 0; a < logInInfo.size(); a++)
+			{
+				String concArray = "";
+				for(int i = 0; i < logInInfo.get(a).length; i++)
+					concArray = concArray + ", " + logInInfo.get(a)[i];
+				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				concArray = concArray + "\n"; //so next entry is on next line
+				logInInfoContent.add(concArray);
+			}
+			
+			writeCSV("logInInfo.csv", logInInfoContent);
+		}
+		
+		if(doctorSchedule != null) //assuming that databases will never be empty at the end, but just in case
+		{
+			ArrayList<String> doctorScheduleContent = new ArrayList<String>();
+			
+			for(int a = 0; a < doctorSchedule.size(); a++)
+			{
+				String concArray = "";
+				for(int i = 0; i < doctorSchedule.get(a).length; i++)
+					concArray = concArray + ", " + doctorSchedule.get(a)[i];
+				concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+				concArray = concArray + "\n"; //so next entry is on next line
+				doctorScheduleContent.add(concArray);
+			}
+			
+			writeCSV("doctorSchedule.csv", doctorScheduleContent);
 		}
 	}
     
@@ -182,6 +238,37 @@ public class DatabaseManager {
         	return match[index];
     }
     
+    public void addCurrentLogIn(String identifier)
+    {
+    	currentLogIn.add(identifier);
+    }
+    
+    public void removeCurrentLogIn(String identifier)
+    {
+    	currentLogIn.remove(identifier);
+    }
+    
+    public boolean checkCurrentLogIn(String identifier)
+    {
+    	boolean loggedIn = false;
+    	
+    	for(String employee : currentLogIn)
+    	{
+    		if(employee.equals(identifier))
+    		{
+    			loggedIn = true;
+    			break;
+    		}
+    	}
+    	
+    	return loggedIn;
+    }
+    
+    public ArrayList<String> getCurrentLogIn()
+    {
+    	return new ArrayList<String>(currentLogIn);
+    }
+    
     public String getTreatmentChartData(String identifier, int index)
     {
     	//TreatmentChart: 0-ChartID, 1-Height, 2-Weight, 3-BloodPressure, 4-VisitReason, 5-TreatmentContent, 6-Prescription, 7-PatientID
@@ -228,6 +315,46 @@ public class DatabaseManager {
         String[] match = null;
         
         for(String[] line : report)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        if(match == null)
+        	return "ERROR";
+        else
+        	return match[index];
+    }
+    
+    public String getLogInInfoData(String identifier, int index)
+    {
+    	//LogInInfo: 0-EmployeeID, 1-Password, 2-Role
+        String[] match = null;
+        
+        for(String[] line : logInInfo)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        if(match == null)
+        	return "ERROR";
+        else
+        	return match[index];
+    }
+    
+    public String getDoctorScheduleData(String identifier, int index)
+    {
+    	//DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
+        String[] match = null;
+        
+        for(String[] line : doctorSchedule)
         {
             if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
             {
@@ -306,6 +433,38 @@ public class DatabaseManager {
         return match;
     }
     
+    public String[] getLogInInfoLine(String identifier)
+    {
+    	String[] match = null;
+        
+        for(String[] line : logInInfo)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        return match;
+    }
+    
+    public String[] getDoctorScheduleLine(String identifier)
+    {
+    	String[] match = null;
+        
+        for(String[] line : doctorSchedule)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+        
+        return match;
+    }
+    
     public void addPaitentChart(String SSN, String PatientID, String Email, String PhoneNumber, String HealthCondition, String Name, String Address, String InsuranceName, String ChartID)
     {
     	String[] a = {SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID};
@@ -324,10 +483,23 @@ public class DatabaseManager {
     	paymentInfo.add(a);    	
     }
     
-    public void addReport(String ReportDate, String DoctorName, String NumberPatients, String AmountEarned)
+    public void addReport(String ReportDate, String EmployeeID, String NumberPatients, String AmountEarned)
     {
-    	String[] a = {ReportDate, DoctorName, NumberPatients, AmountEarned};
+    	String[] a = {ReportDate, EmployeeID, NumberPatients, AmountEarned};
     	report.add(a);    	
+    }
+    
+    public void addLogInInfo(String EmployeeID, String Password, String Role)
+    {
+    	String[] a = {EmployeeID, Password, Role};
+    	logInInfo.add(a);    	
+    }
+    
+    public void addDoctorSchedule(String PatientID, String Time, String EmployeeID)
+    {
+    	//DoctorSchedule: PatientID, Time, EmployeeID
+    	String[] a = {PatientID, Time,  EmployeeID};
+    	doctorSchedule.add(a);    	
     }
     
     public void deletePatientChart(String identifier)
@@ -373,6 +545,30 @@ public class DatabaseManager {
             if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
             {
             	report.remove(line);
+                break;
+            }
+        }
+    }
+    
+    public void deleteLogInInfo(String identifier)
+    {
+    	for(String[] line : logInInfo)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+            	logInInfo.remove(line);
+                break;
+            }
+        }
+    }
+    
+    public void deleteDoctorSchedule(String identifier)
+    {
+    	for(String[] line : doctorSchedule)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+            	doctorSchedule.remove(line);
                 break;
             }
         }
