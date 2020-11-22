@@ -35,5 +35,13 @@ public class AppointmentManager
     {
         return patientList.get(patientName);
     }
-    
+    public void makeAppointment(String timeSlot, String doctor, String patient)
+    {
+        doctorsList.get(doctor).markAppointment(timeSlot, patient);
+    }
+    public void clearAppointment(String timeSlot, String doctor)
+    {
+        doctorsList.get(doctor).clearAppointment(timeSlot);
+        
+    }
 }
