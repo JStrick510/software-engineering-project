@@ -6,13 +6,15 @@ import java.time.LocalTime;
 
 public class ReportManager {
 	
+	private ReportGenerator RG = new ReportGenerator();
+	
 	public void generateReport()
 	{
 		//create a new instance of timer class
 		Timer timer = new Timer();
 		
 		//create an instance of task to be scheduled
-		TimerTask task = new ReportGenerator();
+		TimerTask task = RG;
 		
 		int dayMS = 86400000; //24hrs in ms
 		int nineMS = 75600000; //time from 12AM to 9PM in ms
@@ -28,6 +30,16 @@ public class ReportManager {
 		timer.schedule(task, delay, dayMS); 
 		
 		//timer.cancel(); //this is needed at when the program closes to close the timer
+	}
+	
+	public void addPatientDoctor(String doctorName)
+	{
+		RG.addPatientDoctor(doctorName);	
+	}
+	
+	public void addMoneyDoctor(String doctorName, int moneyMade)
+	{
+		RG.addMoneyDoctor(doctorName, moneyMade);	
 	}
 
 }
