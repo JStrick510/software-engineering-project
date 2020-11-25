@@ -1,4 +1,4 @@
-package project1;
+//package project1;
 
 import java.io.BufferedReader;  
 import java.io.FileReader;  
@@ -368,7 +368,23 @@ public class DatabaseManager {
         else
         	return match[index];
     }
-
+    public String[] getDoctorScheduleAvailable(String identifier, int index)
+    {
+    	//DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
+        String[] match = new String[16];
+        int i = 0;
+        for(String[] line : doctorSchedule)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match[i] = line[index];
+                i++;
+            }
+            
+        }
+        return match;
+    }
+    
     public String[] getPatientChartLine(String identifier)
     {
         String[] match = null;

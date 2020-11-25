@@ -1,4 +1,6 @@
+
 import java.util.*;
+
 public class AppointmentManager
 {
     
@@ -15,14 +17,14 @@ public class AppointmentManager
     }
 
     //Method for adding Doctor to the list 
-    void addDoctor(String doctorName)
+    void addDoctor(String employeID)
     {
-        doctorsList.put(doctorName, new Doctor(doctorName));
+        doctorsList.put(employeID, new Doctor(employeID));
     }
     //Method for retreiving Doctor from list based on name
-    Doctor getDoctor(String doctorName)
+    Doctor getDoctor(String employeID)
     {
-        return doctorsList.get(doctorName);
+        return doctorsList.get(employeID);
 
     }
     //Method for adding Patient to the list 
@@ -30,18 +32,43 @@ public class AppointmentManager
     {
         patientList.put(patientName, new Patient(patientName));
     }
-    //Method for retreiving patient from the list based on name
+    // for retreiving patient from the list based on name
     Patient getPateint(String patientName)
     {
         return patientList.get(patientName);
     }
-    public void makeAppointment(String timeSlot, String doctor, String patient)
+    //Will find all existing appointments in csv file and return an array of times that are currently available
+    public String[] checkAvailable(String EmployeeID)
     {
-        doctorsList.get(doctor).markAppointment(timeSlot, patient);
+        String[] busy = new String[16];
+        
+        DatabaseManager DataMan = new DatabaseManager();
+        busy = DataMan.getDoctorScheduleAvailable(EmployeeID, 1);
+        String[] avail = {"9a","9:30a","10a","10:30a","11a", "11:30a","12p","12:30p","1p","1:30p","2:00p","2:30p","3:00p","3:30p","4p","4:30p"};
+        for (int i = 0; i < avail.length; i++)
+        {
+            if(Arrays.asList(busy).contains(avail[i]))
+            {
+                avail[i] = "Not Available";
+            }
+        }
+        return avail;
+
+    } 
+
+    public void markAppointment(String patientID, String timeSlot, String EmployeeID )
+    {
+        
+        DatabaseManager DataMan = new DatabaseManager();
+        DataMan.addDoctorSchedule(patientID, timeSlot, EmployeeID);
+        System.out.println("appointment created for Dr." + EmployeeID + " with patient " + patientID + " at " + timeSlot + "\n");
+
     }
-    public void clearAppointment(String timeSlot, String doctor)
+    public void clearAppointment(String patientID)
     {
-        doctorsList.get(doctor).clearAppointment(timeSlot);
+        DatabaseManager DataMan = new DatabaseManager();
+        DataMan.deleteDoctorSchedule(patientID);
         
     }
+    
 }
