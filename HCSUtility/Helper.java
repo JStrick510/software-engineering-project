@@ -1,6 +1,6 @@
-//package HCSUtility;
+package HCSUtility;
 
-//import GUI.ErrorScreen;
+import GUI.ErrorScreen;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,6 +27,8 @@ final public class Helper
             {
                 chart.add(line);
             }
+
+            reader.close();
 
             if (!Files.deleteIfExists(file.toPath()))
             {

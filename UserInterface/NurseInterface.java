@@ -1,7 +1,8 @@
-//package UserInterface;
+package UserInterface;
 
-//import Database.DatabaseManager;
-//import GUI.PatientTreatmentForm;
+import Database.DatabaseManager;
+import GUI.PatientSelect;
+import GUI.PatientTreatmentForm;
 
 /**
  *
@@ -90,12 +91,14 @@ public class NurseInterface extends javax.swing.JFrame
 
     private void editPatientActionPerformed(java.awt.event.ActionEvent evt)
     {
-        PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Nurse");
+        PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Nurse", false);
         treatmentForm.setVisible(true);
     }
 
     private void viewPatientActionPerformed(java.awt.event.ActionEvent evt)
     {
+        PatientSelect select = new PatientSelect("Patient");
+        select.setVisible(true);
     }
 
     private void logOutActionPerformed(java.awt.event.ActionEvent evt)

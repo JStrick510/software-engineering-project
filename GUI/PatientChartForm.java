@@ -1,7 +1,7 @@
-//package GUI;
+package GUI;
 
-//import Database.DatabaseManager;
-//import HCSUtility.Helper;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -355,28 +355,38 @@ public class PatientChartForm extends javax.swing.JFrame
     private void populatePatientChart()
     {
         ArrayList<String> chart = Helper.loadChartData(".patient_id.txt");
-        // PatientChart: SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID
-        ssn.setText(chart.get(0));
-        email.setText(chart.get(2));
-        phoneNum.setText(chart.get(3));
-        healthCondition.setSelectedItem(chart.get(4));
+        try
+        {
+            // PatientChart: SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID
+            ssn.setText(chart.get(0));
+            email.setText(chart.get(2));
+            phoneNum.setText(chart.get(3));
+            healthCondition.setSelectedItem(chart.get(4));
 
-        //TODO: error checking
-        String name = chart.get(5);
-        String[] fullName = name.split("\\s+");
-        fName.setText(fullName[0]);
-        middleInitial.setText(fullName[1]);
-        lName.setText(fullName[2]);
+            String name = chart.get(5);
+            String[] fullName = name.split("\\s+");
+            fName.setText(fullName[0]);
+            middleInitial.setText(fullName[1]);
+            lName.setText(fullName[2]);
 
-        //TODO: error checking
-        String address = chart.get(6);
-        String[] fullAddr = address.split("\n\ns+");
-        streetAddress.setText(fullAddr[0]);
-        city.setText(fullAddr[1]);
-        state.setText(fullAddr[2]);
-        zipCode.setText(fullAddr[3]);
+            String address = chart.get(6);
+            String[] streetAddr = address.split("\\s+");
+            streetAddress.setText(streetAddr[0]);
+            city.setText(streetAddr[1]);
 
-        insurance.setText(chart.get(6));
+            address = chart.get(7);
+            String[] stateAddr = address.split("\\s+");
+            state.setText(stateAddr[0]);
+            zipCode.setText(stateAddr[1]);
+
+            insurance.setText(chart.get(8));
+        }
+        catch (Exception ex)
+        {
+            ErrorScreen error = new ErrorScreen("Failed to populate chart\n"+ex.toString());
+            error.setVisible(true);
+            this.dispose();
+        }
     }
 
 

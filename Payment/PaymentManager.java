@@ -11,10 +11,12 @@ public class PaymentManager
     private String m_amount;
     private String m_cardNo;
     private String m_cvv;
+    private String m_pin;
     private String m_paymentType;
     private String m_referenceNum;
+    private String m_addr;
 
-    PaymentManager()
+    public PaymentManager()
     {
         dbm = new DatabaseManager();
         this.m_patientName = "";
@@ -22,11 +24,13 @@ public class PaymentManager
         this.m_date = "";
         this.m_cardNo = "";
         this.m_cvv = "";
+        this.m_pin = "";
         this.m_paymentType = "";
         this.m_referenceNum = "";
+        this.m_addr = "";
     }
 
-    PaymentManager(String patientName, String amnt, String date, String cardNo, String cvv, String paymentType)
+    public PaymentManager(String patientName, String amnt, String date, String cardNo, String cvv, String pin, String paymentType, String addr)
     {
         dbm = new DatabaseManager();
         this.m_patientName = patientName;
@@ -34,15 +38,17 @@ public class PaymentManager
         this.m_date = date;
         this.m_cardNo = cardNo;
         this.m_cvv = cvv;
+        this.m_pin = pin;
         this.m_paymentType = paymentType;
+        this.m_addr = addr;
     }
 
-    public boolean retreiveRefNum()
+    public String retreiveRefNum()
     {
-        BankInterface bank = new BankInterface();
+        BankInterface bank = new BankInterface(m_cardNo, m_cvv, m_pin);
+        m_referenceNum = bank.generateRefNum();
 
-
-        return false;
+        return m_referenceNum;
     }
 
     public String getDate()

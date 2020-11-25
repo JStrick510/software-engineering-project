@@ -1,7 +1,10 @@
-//package GUI;
+package GUI;
 
 
-//import Database.DatabaseManager;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -9,9 +12,13 @@
  */
 public class AppointmentInterface extends javax.swing.JFrame
 {
-    public AppointmentInterface()
+    public AppointmentInterface(boolean loadChart)
     {
         initComponents();
+        if (loadChart)
+        {
+            populateChart();
+        }
         this.setLocationRelativeTo(null);
     }
 
@@ -141,6 +148,21 @@ public class AppointmentInterface extends javax.swing.JFrame
     private void cancelActionPerformed(java.awt.event.ActionEvent evt)
     {
         this.dispose();
+    }
+
+    private void populateChart()
+    {
+        ArrayList<String> chart = Helper.loadChartData(".patient_id.txt");
+
+        try
+        {
+        }
+        catch (Exception e)
+        {
+            ErrorScreen error = new ErrorScreen("Failed to populate chart\n"+e.toString());
+            error.setVisible(true);
+            this.dispose();
+        }
     }
 
     private javax.swing.JButton cancel;

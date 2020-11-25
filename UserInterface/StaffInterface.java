@@ -1,9 +1,10 @@
-// package UserInterface;
+package UserInterface;
 
-// import Database.DatabaseManager;
-// import GUI.AppointmentInterface;
-// import GUI.PatientChartForm;
-// import GUI.PatientSelect;
+import Database.DatabaseManager;
+import GUI.AppointmentInterface;
+import GUI.PatientChartForm;
+import GUI.PatientSelect;
+import GUI.PaymentInterface;
 
 /**
  *
@@ -161,18 +162,20 @@ public class StaffInterface extends javax.swing.JFrame
 
     private void newAppointmentActionPerformed(java.awt.event.ActionEvent evt)
     {
-        AppointmentInterface appt = new AppointmentInterface();
+        AppointmentInterface appt = new AppointmentInterface(false);
         appt.setVisible(true);
     }
 
     private void modAppointmentActionPerformed(java.awt.event.ActionEvent evt)
     {
-        PatientSelect select = new PatientSelect();
+        PatientSelect select = new PatientSelect("Appointment");
         select.setVisible(true);
     }
 
     private void paymentActionPerformed(java.awt.event.ActionEvent evt)
     {
+        PaymentInterface pay = new PaymentInterface(false);
+        pay.setVisible(true);
     }
 
     private void patientInformationActionPerformed(java.awt.event.ActionEvent evt)
@@ -191,14 +194,14 @@ public class StaffInterface extends javax.swing.JFrame
 
     private void viewPatientActionPerformed(java.awt.event.ActionEvent evt)
     {
-        PatientSelect patientSelect = new PatientSelect();
+        PatientSelect patientSelect = new PatientSelect("Patient");
         patientSelect.setVisible(true);
-        PatientChartForm chart = new PatientChartForm(true);
-        chart.setVisible(true);
     }
 
     private void viewPayActionPerformed(java.awt.event.ActionEvent evt)
     {
+        PatientSelect patientSelect = new PatientSelect("Pay");
+        patientSelect.setVisible(true);
     }
 
     private javax.swing.JLabel jLabel1;

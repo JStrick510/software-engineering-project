@@ -1,8 +1,9 @@
-//package UserInterface;
+package UserInterface;
 
 
-//import Database.DatabaseManager;
-//import GUI.PatientTreatmentForm;
+import Database.DatabaseManager;
+import GUI.PatientSelect;
+import GUI.PatientTreatmentForm;
 
 /**
  *
@@ -120,12 +121,14 @@ public class DoctorInterface extends javax.swing.JFrame
 
     private void editChartActionPerformed(java.awt.event.ActionEvent evt)
     {
-        PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor");
+        PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor", false);
         treatmentForm.setVisible(true);
     }
 
     private void viewChartActionPerformed(java.awt.event.ActionEvent evt)
     {
+        PatientSelect select = new PatientSelect("Chart");
+        select.setVisible(true);
     }
 
     private void logOutActionPerformed(java.awt.event.ActionEvent evt)

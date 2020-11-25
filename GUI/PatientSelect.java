@@ -1,6 +1,6 @@
-//package GUI;
+package GUI;
 
-//import Database.DatabaseManager;
+import Database.DatabaseManager;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,8 +12,9 @@ import java.io.IOException;
  */
 public class PatientSelect extends javax.swing.JFrame
 {
-    public PatientSelect()
+    public PatientSelect(String selectFor)
     {
+        m_selectFor = selectFor;
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -106,7 +107,27 @@ public class PatientSelect extends javax.swing.JFrame
         m_ssn = ssn.getText();
         dbm = new DatabaseManager();
 
-        m_chart = dbm.getPatientChartLine(m_ssn);
+
+        switch (m_selectFor)
+        {
+            case "Patient":
+                m_chart = dbm.getPatientChartLine(m_ssn);
+                break;
+            case "Pay":
+                m_chart = dbm.getPaymentInfoLine(m_ssn);
+                break;
+            case "Appointment":
+                String id = dbm.getPatientChartData(m_ssn, 1);
+                String time = dbm.getDoctorScheduleData(id, 1);
+                String empId = dbm.getDoctorScheduleData(id, 3);
+                //TODO: get doctor name
+                break;
+            case "Chart":
+                m_chart = dbm.getTreatmentChartLine(m_ssn);
+                break;
+            default:
+                break;
+        }
         dbm.closeDB();
 
         returnID();
@@ -124,7 +145,7 @@ public class PatientSelect extends javax.swing.JFrame
                 FileWriter patientId = new FileWriter(file);
                 for (String line : m_chart)
                 {
-                    patientId.append(line);
+                    patientId.write(line.trim()+"\n");
                 }
                 patientId.close();
             }
@@ -135,6 +156,28 @@ public class PatientSelect extends javax.swing.JFrame
             ErrorScreen err = new ErrorScreen(e.toString());
             err.setVisible(true);
         }
+        switch (m_selectFor)
+        {
+            case "Patient":
+                PatientChartForm form = new PatientChartForm(true);
+                form.setVisible(true);
+                break;
+            case "Pay":
+                PaymentInterface pay = new PaymentInterface(true);
+                pay.setVisible(true);
+                break;
+            case "Appointment":
+                AppointmentInterface appt = new AppointmentInterface(true);
+                appt.setVisible(true);
+                break;
+            case "Chart":
+                PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor", true);
+                treatmentForm.setVisible(true);
+                break;
+            default:
+                break;
+        }
+        this.dispose();
     }
 
     private javax.swing.JButton cancel;
@@ -146,4 +189,6 @@ public class PatientSelect extends javax.swing.JFrame
 
     private String m_ssn;
     private String[] m_chart;
+
+    private String m_selectFor;
 }

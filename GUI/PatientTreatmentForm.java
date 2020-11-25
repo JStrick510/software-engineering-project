@@ -1,6 +1,9 @@
-//package GUI;
+package GUI;
 
-//import Database.DatabaseManager;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -9,10 +12,14 @@
 public class PatientTreatmentForm extends javax.swing.JFrame
 {
 
-    public PatientTreatmentForm(String employee)
+    public PatientTreatmentForm(String employee, boolean loadChart)
     {
         this.m_employeeType = employee;
         initComponents();
+        if (loadChart)
+        {
+            populateChart();
+        }
         this.setLocationRelativeTo(null);
     }
 
@@ -340,6 +347,31 @@ public class PatientTreatmentForm extends javax.swing.JFrame
     private void cancelActionPerformed(java.awt.event.ActionEvent evt)
     {
         this.dispose();
+    }
+
+    private void populateChart()
+    {
+        ArrayList<String> chart = Helper.loadChartData(".patient_id.txt");
+
+        try
+        {
+            String height = chart.get(1);
+            String[] fullHeight = height.split("\\s+");
+            feet.setText(fullHeight[0]);
+            inches.setText(fullHeight[1]);
+
+            weight.setText(chart.get(2));
+            bloodPressure.setText(chart.get(3));
+            reason.setText(chart.get(4));
+            treatment.setText(chart.get(5));
+            perscription.setText(chart.get(6));
+        }
+        catch (Exception e)
+        {
+            ErrorScreen error = new ErrorScreen("Failed to populate chart\n"+e.toString());
+            error.setVisible(true);
+            this.dispose();
+        }
     }
 
     private javax.swing.JTextField bloodPressure;

@@ -1,7 +1,7 @@
-//package UserInterface;
+package UserInterface;
 
 
-//import Database.DatabaseManager;
+import Database.DatabaseManager;
 
 /**
  *
