@@ -25,7 +25,6 @@ public class DatabaseManager {
 	private ArrayList<String[]> doctorSchedule;
 	
 	private ArrayList<String> currentLogIn;
-	
 	public DatabaseManager()
     {
 		//initialize arraylists
@@ -469,7 +468,22 @@ public class DatabaseManager {
         
         return match;
     }
-    
+    public String[] getDoctorScheduleAvailable(String identifier, int index)
+    {
+    	//DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
+        String[] match = new String[16];
+        int i = 0;
+        for(String[] line : doctorSchedule)
+        {
+            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match[i] = line[index];
+                i++;
+            }
+
+        }
+        return match;
+    }
     public void addPaitentChart(String SSN, String PatientID, String Email, String PhoneNumber, String HealthCondition, String Name, String Address, String InsuranceName, String ChartID)
     {
     	String[] a = {SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID};

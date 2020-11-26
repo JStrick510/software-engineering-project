@@ -55,7 +55,7 @@ public class AppointmentManager
         return avail;
 
     } 
-
+    
     public void markAppointment(String patientID, String timeSlot, String EmployeeID )
     {
         
@@ -64,11 +64,41 @@ public class AppointmentManager
         System.out.println("appointment created for Dr." + EmployeeID + " with patient " + patientID + " at " + timeSlot + "\n");
 
     }
-    public void clearAppointment(String patientID)
+
+    public void clearAppointment(String patientID, int state)
     {
         DatabaseManager DataMan = new DatabaseManager();
-        DataMan.deleteDoctorSchedule(patientID);
-        
+        if (state == 0)
+        {
+            getDoctor(DataMan.getDoctorScheduleData(patientID, 2)).numPatients++;
+        }
+        DataMan.deleteDoctorSchedule(patientID);        
     }
+
+    public int getNumAppoint(String employeeID)
+    {
+        return getDoctor(employeeID).numPatients;
+    }
+//adds a specified amount of money to the earnings of a specified doctor 
+    public void addEarnings(String employeeID, double amount)
+    {
+        double num = getDoctor(employeeID).getdailyEarnings();
+        num = num + amount;
+        getDoctor(employeeID).setdailyEarnings(num);
+    }
+//returns the amount of money a doctor has earned throughout the day and resets the value to 0 for the next day
+    public double getdailyEarnings(String employeeID)
+    {
+        double num;
+        num = getDoctor(employeeID).dailyEarnings;
+        getDoctor(employeeID).setdailyEarnings(0.0);
+        return num;
+    }
+//returns the current value of the doctors daily earnings
+    public double peekEarnings(String employeeID)
+    {
+        return getDoctor(employeeID).dailyEarnings;
+    }
+        
     
 }
