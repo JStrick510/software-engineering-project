@@ -367,7 +367,7 @@ public class DatabaseManager {
 
     public String getDoctorScheduleData(String identifier, int index)
     {
-        //DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
+        //DoctorSchedule: 0-EmployeeID, 1-Time, 2-PatientID
         String[] match = null;
 
         for(String[] line : doctorSchedule)
@@ -386,14 +386,14 @@ public class DatabaseManager {
     }
     public String[] getDoctorScheduleAvailable(String identifier, int index)
     {
-        //DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
+        //DoctorSchedule: 0-EmployeeID, 1-Time, 2-PatientID
         String[] match = new String[16];
         int i = 0;
         for(String[] line : doctorSchedule)
         {
             if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
             {
-                match[i] = line[index];
+                match[i] = line[index].trim();
                 i++;
             }
 
@@ -529,8 +529,8 @@ public class DatabaseManager {
 
     public void addDoctorSchedule(String PatientID, String Time, String EmployeeID)
     {
-        //DoctorSchedule: PatientID, Time, EmployeeID
-        String[] a = {PatientID, Time,  EmployeeID};
+        //DoctorSchedule: EmployeeID, Time, PatientID
+        String[] a = {EmployeeID, Time,  PatientID};
         doctorSchedule.add(a);
     }
 
