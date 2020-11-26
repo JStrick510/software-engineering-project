@@ -336,7 +336,6 @@ public class DatabaseManager {
 
         for(String[] line : logInInfo)
         {
-            System.out.println("line: " + line[0] + " identifier: " + identifier);
             if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
             {
                 match = line;
@@ -348,6 +347,22 @@ public class DatabaseManager {
             return "ERROR";
         else
             return match[index];
+    }
+
+    public String getEmployeeID(String name)
+    {
+        //LogInInfo: 0-EmployeeID, 1-Password, 2-Role, 3-Name
+        String[] match = null;
+
+        for(String[] line : logInInfo)
+        {
+            if(line[3].trim().equals(name)) //assuming that all primary keys will be the first item
+            {
+                return line[0];
+            }
+        }
+
+        return "ERROR";
     }
 
     public String getDoctorScheduleData(String identifier, int index)
