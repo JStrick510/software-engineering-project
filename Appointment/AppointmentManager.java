@@ -15,7 +15,7 @@ public class AppointmentManager
 
     //TODO: Date class?
     //TODO: Add functionality for checking/adding appointments for individual Doctor objects
-    AppointmentManager()
+    public AppointmentManager()
     {
 
     }
