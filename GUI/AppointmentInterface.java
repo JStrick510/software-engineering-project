@@ -1,10 +1,8 @@
 package GUI;
 
 
+import Appointment.AppointmentManager;
 import Database.DatabaseManager;
-import HCSUtility.Helper;
-
-import java.util.ArrayList;
 
 /**
  *
@@ -14,11 +12,8 @@ public class AppointmentInterface extends javax.swing.JFrame
 {
     public AppointmentInterface(boolean loadChart)
     {
+        m_loadChart = loadChart;
         initComponents();
-        if (loadChart)
-        {
-            populateChart();
-        }
         this.setLocationRelativeTo(null);
     }
 
@@ -44,7 +39,7 @@ public class AppointmentInterface extends javax.swing.JFrame
             }
         });
 
-        timeSlot.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "9am-9:30am", "9:30m-10am", "10am-10:30am", "10:30am-11am", "11am-11:30am", "12pm-12:30pm", "12:30pm-1pm", "1pm-1:30pm", "1:30pm-2pm", "2pm-2:30pm", "2:30pm-3pm", "3pm-3:30pm", "3:30pm-4pm", "4pm-4:30pm", "4:30pm-5pm" }));
+        timeSlot.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "9am-9:30am", "9:30am-10am", "10am-10:30am", "10:30am-11am", "11am-11:30am", "12pm-12:30pm", "12:30pm-1pm", "1pm-1:30pm", "1:30pm-2pm", "2pm-2:30pm", "2:30pm-3pm", "3pm-3:30pm", "3:30pm-4pm", "4pm-4:30pm", "4:30pm-5pm" }));
         timeSlot.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -117,6 +112,7 @@ public class AppointmentInterface extends javax.swing.JFrame
         );
 
         pack();
+        m_timeSlot = timeSlot.getItemAt(timeSlot.getSelectedIndex());
     }// </editor-fold>
 
     private void doctorNameMouseClicked(java.awt.event.MouseEvent evt)
@@ -127,42 +123,36 @@ public class AppointmentInterface extends javax.swing.JFrame
     private void timeSlotActionPerformed(java.awt.event.ActionEvent evt)
     {
         m_timeSlot = timeSlot.getItemAt(timeSlot.getSelectedIndex());
-        //TODO
-        System.out.println(m_timeSlot);
     }
 
     private void checkActionPerformed(java.awt.event.ActionEvent evt)
     {
+        mgr = new AppointmentManager();
         dbm = new DatabaseManager();
-
-        //TODO: Database manager needs a way to get EmployeeID from employee name
-
-        if (dbm.getDoctorScheduleData(m_timeSlot, 1).compareTo("ERROR") != 0)
-        {
-            //dbm.addDoctorSchedule();
-        }
-
+        String id = dbm.getEmployeeID(doctorName.getText());
         dbm.closeDB();
+
+        String[] availability = mgr.checkAvailable(id);
+        int index = m_timeSlot.indexOf("-");
+        String avail = m_timeSlot.substring(0, index);
+        for (String line : availability)
+        {
+            System.out.println(line);
+            if (line.equals(avail))
+            {
+                MakeAppointment makeAppointment = new MakeAppointment(doctorName.getText(), m_loadChart);
+                makeAppointment.setVisible(true);
+                this.dispose();
+                return;
+            }
+        }
+        ErrorScreen errorScreen = new ErrorScreen("Time slot not available");
+        errorScreen.setVisible(true);
     }
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt)
     {
         this.dispose();
-    }
-
-    private void populateChart()
-    {
-        ArrayList<String> chart = Helper.loadChartData(".patient_id.txt");
-
-        try
-        {
-        }
-        catch (Exception e)
-        {
-            ErrorScreen error = new ErrorScreen("Failed to populate chart\n"+e.toString());
-            error.setVisible(true);
-            this.dispose();
-        }
     }
 
     private javax.swing.JButton cancel;
@@ -174,5 +164,8 @@ public class AppointmentInterface extends javax.swing.JFrame
 
     private DatabaseManager dbm;
 
+    private AppointmentManager mgr;
+
     private String m_timeSlot;
+    private boolean m_loadChart;
 }

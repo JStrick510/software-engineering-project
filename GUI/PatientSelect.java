@@ -117,10 +117,7 @@ public class PatientSelect extends javax.swing.JFrame
                 m_chart = dbm.getPaymentInfoLine(m_ssn);
                 break;
             case "Appointment":
-                String id = dbm.getPatientChartData(m_ssn, 1);
-                String time = dbm.getDoctorScheduleData(id, 1);
-                String empId = dbm.getDoctorScheduleData(id, 3);
-                //TODO: get doctor name
+                //TODO
                 break;
             case "Chart":
                 m_chart = dbm.getTreatmentChartLine(m_ssn);
