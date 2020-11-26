@@ -1,4 +1,4 @@
-package project1;
+ package project1;
 
 import java.util.*;
 import java.text.DateFormat;  
@@ -8,7 +8,7 @@ public class ReportGenerator extends TimerTask{
 	
 	private ArrayList<String> doctors = new ArrayList<>();
 	private ArrayList<Integer> visits = new ArrayList<>();
-	private ArrayList<Integer> money = new ArrayList<>();
+	private ArrayList<Double> money = new ArrayList<>();
 	
 	@Override
 	public void run() {
@@ -21,7 +21,7 @@ public class ReportGenerator extends TimerTask{
 		
 		for(int i = 0; i < doctors.size(); i++)
 		{
-			DBM.addReport(strDate, doctors.get(i), Integer.toString(visits.get(i)), Integer.toString(money.get(i)));
+			DBM.addReport(strDate, doctors.get(i), Integer.toString(visits.get(i)), Double.toString(money.get(i)));
 		}
 		
 		DBM.closeDB();
@@ -41,12 +41,12 @@ public class ReportGenerator extends TimerTask{
 		{
 			doctors.add(doctorName);
 			visits.add(1);
-			money.add(0);
+			money.add(0.0);
 		}
 		
 	}
 	
-	public void addMoneyDoctor(String doctorName, int moneyMade)
+	public void addMoneyDoctor(String doctorName, Double moneyMade)
 	{
 		if(doctors.contains(doctorName))
 			money.set(doctors.indexOf(doctorName), money.get(doctors.indexOf(doctorName)) + moneyMade);

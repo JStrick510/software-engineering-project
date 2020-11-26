@@ -1,6 +1,6 @@
-package HCSUtility;
+ package HCSUtility;
 
-import GUI.ErrorScreen;
+ import GUI.ErrorScreen;
 
 import java.io.BufferedReader;
 import java.io.File;

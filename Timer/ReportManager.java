@@ -37,7 +37,7 @@ public class ReportManager {
 		RG.addPatientDoctor(doctorName);	
 	}
 	
-	public void addMoneyDoctor(String doctorName, int moneyMade)
+	public void addMoneyDoctor(String doctorName, double moneyMade)
 	{
 		RG.addMoneyDoctor(doctorName, moneyMade);	
 	}

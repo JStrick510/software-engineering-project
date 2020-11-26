@@ -1,11 +1,10 @@
-import java.util.Hashtable;
+
 
 public class Doctor {
     String doctorName;
     double dailyEarnings;
     int numPatients;
-    //Initialize the schedule for the Doctor object that tracks availability
-    //Hashtable<String, String> appTable = new Hashtable<String, String>();
+    
     Doctor()
     {
         this.doctorName = "";
@@ -20,7 +19,7 @@ public class Doctor {
         this.dailyEarnings = 0.0;
         this.numPatients = 0;
     }
-    
+    //Methods to set values of variables
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
     }
@@ -33,6 +32,7 @@ public class Doctor {
         this.numPatients = num;
     }
     
+    //Methods to get values 
     public String getDoctorName() {
         return doctorName;
     }
@@ -45,7 +45,7 @@ public class Doctor {
         return numPatients;
     }
     
-//Method to sate that an appointment was completed succesfully
+//Method to increase number of patients seen when an appointment was completed succesfully
     public void incrementVisits()
     {
         this.numPatients++;

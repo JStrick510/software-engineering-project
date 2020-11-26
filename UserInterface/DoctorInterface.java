@@ -1,9 +1,9 @@
-package UserInterface;
+ package UserInterface;
 
 
-import Database.DatabaseManager;
-import GUI.PatientSelect;
-import GUI.PatientTreatmentForm;
+ import Database.DatabaseManager;
+ import GUI.PatientSelect;
+ import GUI.PatientTreatmentForm;
 
 /**
  *

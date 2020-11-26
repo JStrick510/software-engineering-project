@@ -1,13 +1,12 @@
 package Appointment;
 
 import Database.DatabaseManager;
-
 import java.util.Arrays;
 import java.util.Hashtable;
 
 public class AppointmentManager
 {
-
+    ReportManager reportMan;
     Hashtable<String, Doctor> doctorsList = new Hashtable<String, Doctor>();
     Hashtable<String, Patient> patientList = new Hashtable<String, Patient>();
 
@@ -20,11 +19,27 @@ public class AppointmentManager
 
     }
 
+    public AppointmentManager(ReportManager reportMan)
+    {
+        this.reportMan = reportMan;
+    }
+
+    public void setReportManager(ReportManager reportMan)
+    {
+        this.reportMan = reportMan;
+    }
+
+    public ReportManager getReportManager()
+    {
+        return this.reportMan;
+    }
     //Method for adding Doctor to the list
     void addDoctor(String employeID)
     {
         doctorsList.put(employeID, new Doctor(employeID));
     }
+    
+    
     //Method for retreiving Doctor from list based on name
     Doctor getDoctor(String employeID)
     {
@@ -92,6 +107,7 @@ public class AppointmentManager
         double num = getDoctor(employeeID).getdailyEarnings();
         num = num + amount;
         getDoctor(employeeID).setdailyEarnings(num);
+        reportMan.addMoneyDoctor(employeeID, amount);
     }
     //returns the amount of money a doctor has earned throughout the day and resets the value to 0 for the next day
     public double getdailyEarnings(String employeeID)

@@ -1,6 +1,6 @@
-package Payment;
+ package Payment;
 
-import Database.DatabaseManager;
+ import Database.DatabaseManager;
 
 public class PaymentManager
 {

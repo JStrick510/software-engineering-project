@@ -1,10 +1,10 @@
-package UserInterface;
+ package UserInterface;
 
-import Database.DatabaseManager;
-import GUI.AppointmentInterface;
-import GUI.PatientChartForm;
-import GUI.PatientSelect;
-import GUI.PaymentInterface;
+ import Database.DatabaseManager;
+ import GUI.AppointmentInterface;
+ import GUI.PatientChartForm;
+ import GUI.PatientSelect;
+ import GUI.PaymentInterface;
 
 /**
  *

@@ -1,4 +1,4 @@
-//package project1;
+package project1;
 
 import java.util.Arrays; //just for printing arrays easy
 
@@ -15,7 +15,7 @@ public class TestingDBMain {
         DBM.addTreatmentChart("0", "72in", "180lbs", "120/70", "Rona", "Advil", "500mg", "1");
         DBM.addPaymentInfo("002847865", "Joe Bob", "08/08/2020", "213.98", "Cash", "1");
         DBM.addReport("11/11/20", "Dr. Science", "8", "1500.00");
-        DBM.addLogInInfo("0000", "password", "Doctor");
+        //DBM.addLogInInfo("0000", "password", "Doctor");
         DBM.addDoctorSchedule("1", "Wed 9a", "0000");
         
         //get single info (identifier then index of element wanted)
