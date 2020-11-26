@@ -171,7 +171,7 @@ public class Login extends javax.swing.JFrame
                 break;
             default:
                 System.out.println("Invalid choice");
-                ErrorScreen error = new ErrorScreen("Invalid emplyoee option");
+                ErrorScreen error = new ErrorScreen("Invalid employee option");
                 error.setVisible(true);
                 break;
         }

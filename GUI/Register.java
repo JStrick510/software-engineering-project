@@ -8,10 +8,6 @@ import Database.DatabaseManager;
  */
 public class Register extends javax.swing.JFrame
 {
-
-    /**
-     * Creates new form GUI.Register
-     */
     public Register()
     {
         initComponents();
@@ -300,6 +296,7 @@ public class Register extends javax.swing.JFrame
     {
         m_id = employeeId.getText();
         m_password = password.getText();
+        String name = fName.getText() + " " + middleInitial.getText() + " " + lName.getText();
 
         String role = getRole();
         if (role.equals(""))
@@ -312,7 +309,7 @@ public class Register extends javax.swing.JFrame
         System.out.println("Selected role: " + role);
         dbm = new DatabaseManager();
         //TODO: add password hashing
-        dbm.addLogInInfo(m_id, m_password, role);
+        dbm.addLogInInfo(m_id, m_password, role, name.toLowerCase());
         dbm.closeDB();
         this.dispose();
     }
