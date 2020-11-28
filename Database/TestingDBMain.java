@@ -62,7 +62,27 @@ public class TestingDBMain {
         System.out.println("test done");
         */
 		
-		ReportManager test = new ReportManager();
+		//ReportManager test = new ReportManager();
+		DatabaseManager DBM = new DatabaseManager();
+		
+		//DBM.deleteReport("11-26-2020");
+		//DBM.deleteReport("11-27-2020");
+		//DBM.deleteReport("11-28-2020");
+		
+		//DBM.addReport("11-26-2020", "15", "1500.78");
+		//DBM.addReport("11-27-2020", "8", "5.00");
+		//DBM.addReport("11-28-2020", "10", "201456.50");
+		
+		//DBM.addPaitentChart("123-45-6789", "1", "test@email.com", "8325558322", "Poor", "Joe Bob", "1335 Street Rd", "Health Insurance", "0");
+		//DBM.addTreatmentChart("0", "72in", "180lbs", "120/70", "Rona", "Advil", "500mg", "1");
+		//DBM.addPaymentInfo("002847865", "Joe Bob", "08/08/2020", "213.98", "Cash", "1");
+		//DBM.addDoctorSchedule("1", "9a", "6789", "Joe Bob");
+
+		
+		System.out.println(Arrays.toString(DBM.getReportLine("11-26-2020")));
+		
+		DBM.closeDB();
+		
 		
 		System.out.println("testing to see if other stuff works");
 	}

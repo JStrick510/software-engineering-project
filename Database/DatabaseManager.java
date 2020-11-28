@@ -94,8 +94,8 @@ public class DatabaseManager {
             {
                 String concArray = "";
                 for(int i = 0; i < patientChart.get(a).length; i++)
-                    concArray = concArray + ", " + patientChart.get(a)[i];
-                concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+                    concArray = concArray + "," + patientChart.get(a)[i];
+                concArray = concArray.substring(1,concArray.length()); //to get rid of the first ", " probably a better way to write this
                 concArray = concArray + "\n"; //so next entry is on next line
                 patientChartContent.add(concArray);
             }
@@ -111,8 +111,8 @@ public class DatabaseManager {
             {
                 String concArray = "";
                 for(int i = 0; i < treatmentChart.get(a).length; i++)
-                    concArray = concArray + ", " + treatmentChart.get(a)[i];
-                concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+                    concArray = concArray + "," + treatmentChart.get(a)[i];
+                concArray = concArray.substring(1,concArray.length()); //to get rid of the first ", " probably a better way to write this
                 concArray = concArray + "\n"; //so next entry is on next line
                 treatmentChartContent.add(concArray);
             }
@@ -128,8 +128,8 @@ public class DatabaseManager {
             {
                 String concArray = "";
                 for(int i = 0; i < paymentInfo.get(a).length; i++)
-                    concArray = concArray + ", " + paymentInfo.get(a)[i];
-                concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+                    concArray = concArray + "," + paymentInfo.get(a)[i];
+                concArray = concArray.substring(1,concArray.length()); //to get rid of the first ", " probably a better way to write this
                 concArray = concArray + "\n"; //so next entry is on next line
                 paymentInfoContent.add(concArray);
             }
@@ -145,8 +145,8 @@ public class DatabaseManager {
             {
                 String concArray = "";
                 for(int i = 0; i < report.get(a).length; i++)
-                    concArray = concArray + ", " + report.get(a)[i];
-                concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+                    concArray = concArray + "," + report.get(a)[i];
+                concArray = concArray.substring(1,concArray.length()); //to get rid of the first ", " probably a better way to write this
                 concArray = concArray + "\n"; //so next entry is on next line
                 reportContent.add(concArray);
             }
@@ -162,8 +162,8 @@ public class DatabaseManager {
             {
                 String concArray = "";
                 for(int i = 0; i < logInInfo.get(a).length; i++)
-                    concArray = concArray + ", " + logInInfo.get(a)[i];
-                concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+                    concArray = concArray + "," + logInInfo.get(a)[i];
+                concArray = concArray.substring(1,concArray.length()); //to get rid of the first ", " probably a better way to write this
                 concArray = concArray + "\n"; //so next entry is on next line
                 logInInfoContent.add(concArray);
             }
@@ -179,8 +179,8 @@ public class DatabaseManager {
             {
                 String concArray = "";
                 for(int i = 0; i < doctorSchedule.get(a).length; i++)
-                    concArray = concArray + ", " + doctorSchedule.get(a)[i];
-                concArray = concArray.substring(2,concArray.length()); //to get rid of the first ", " probably a better way to write this
+                    concArray = concArray + "," + doctorSchedule.get(a)[i];
+                concArray = concArray.substring(1,concArray.length()); //to get rid of the first ", " probably a better way to write this
                 concArray = concArray + "\n"; //so next entry is on next line
                 doctorScheduleContent.add(concArray);
             }
