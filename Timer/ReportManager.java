@@ -8,7 +8,7 @@ public class ReportManager {
 	
 	private ReportGenerator RG = new ReportGenerator();
 	
-	public void generateReport()
+	public ReportManager()
 	{
 		//create a new instance of timer class
 		Timer timer = new Timer();
@@ -37,7 +37,7 @@ public class ReportManager {
 		RG.addPatientDoctor(doctorName);	
 	}
 	
-	public void addMoneyDoctor(String doctorName, double moneyMade)
+	public void addMoneyDoctor(String doctorName, int moneyMade)
 	{
 		RG.addMoneyDoctor(doctorName, moneyMade);	
 	}
