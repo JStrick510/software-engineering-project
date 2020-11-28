@@ -105,6 +105,7 @@ public class PatientSelect extends javax.swing.JFrame
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt)
     {
+        noLoad = false;
         m_ssn = ssn.getText();
         dbm = new DatabaseManager();
 
@@ -121,14 +122,17 @@ public class PatientSelect extends javax.swing.JFrame
                 m_chart = dbm.getDoctorScheduleLine(Helper.generateId(m_ssn));
                 break;
             case "Chart":
-                m_chart = dbm.getTreatmentChartLine(m_ssn);
+                String id = Helper.generateId(m_ssn);
+                System.out.println("id: " + id);
+                m_chart = dbm.getTreatmentChartLine(Helper.generateId(m_ssn));
                 break;
             default:
+                noLoad = true;
                 break;
         }
         dbm.closeDB();
 
-        if (m_chart == null)
+        if (!noLoad && m_chart == null)
         {
             ErrorScreen error = new ErrorScreen("Patient with ssn: " + m_ssn + " does not exist\n");
             error.setVisible(true);
@@ -142,31 +146,34 @@ public class PatientSelect extends javax.swing.JFrame
 
     private void returnID()
     {
-        try
+        if (!noLoad)
         {
-            File file = new File(".patient_id.txt");
-            if (file.createNewFile())
+            try
             {
-                FileWriter patientId = new FileWriter(file);
-                for (String line : m_chart)
+                File file = new File(".patient_id.txt");
+                if (file.createNewFile())
                 {
-                    patientId.write(line.trim()+"\n");
+                    FileWriter patientId = new FileWriter(file);
+                    for (String line : m_chart)
+                    {
+                        patientId.write(line.trim()+"\n");
+                    }
+                    patientId.close();
                 }
-                patientId.close();
             }
-        }
-        catch (IOException e)
-        {
-            System.out.println("Could not create file");
-            ErrorScreen err = new ErrorScreen(e.toString());
-            err.setVisible(true);
-            return;
-        }
-        catch (Exception ex)
-        {
-            ErrorScreen error = new ErrorScreen(ex.toString());
-            error.setVisible(true);
-            return;
+            catch (IOException e)
+            {
+                System.out.println("Could not create file");
+                ErrorScreen err = new ErrorScreen(e.toString());
+                err.setVisible(true);
+                return;
+            }
+            catch (Exception ex)
+            {
+                ErrorScreen error = new ErrorScreen(ex.toString());
+                error.setVisible(true);
+                return;
+            }
         }
         switch (m_selectFor)
         {
@@ -187,8 +194,16 @@ public class PatientSelect extends javax.swing.JFrame
                 appt2.setVisible(true);
                 break;
             case "Chart":
-                PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor", true);
+                PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor", true, m_ssn);
                 treatmentForm.setVisible(true);
+                break;
+            case "Chart-No-Load":
+                PatientTreatmentForm treatmentForm2 = new PatientTreatmentForm("Doctor", false, m_ssn);
+                treatmentForm2.setVisible(true);
+                break;
+            case "Chart-No-Load-Nurse":
+                PatientTreatmentForm treatmentForm3 = new PatientTreatmentForm("Nurse", false, m_ssn);
+                treatmentForm3.setVisible(true);
                 break;
             default:
                 break;
@@ -207,4 +222,6 @@ public class PatientSelect extends javax.swing.JFrame
     private String[] m_chart;
 
     private String m_selectFor;
+
+    private boolean noLoad;
 }

@@ -1,9 +1,7 @@
 package UserInterface;
 
 import Database.DatabaseManager;
-import GUI.MainMenu;
 import GUI.PatientSelect;
-import GUI.PatientTreatmentForm;
 
 /**
  *
@@ -92,8 +90,8 @@ public class NurseInterface extends javax.swing.JFrame
 
     private void editPatientActionPerformed(java.awt.event.ActionEvent evt)
     {
-        PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Nurse", false);
-        treatmentForm.setVisible(true);
+        PatientSelect select = new PatientSelect("Chart-No-Load-Nurse");
+        select.setVisible(true);
     }
 
     private void viewPatientActionPerformed(java.awt.event.ActionEvent evt)

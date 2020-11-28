@@ -2,9 +2,7 @@ package UserInterface;
 
 
 import Database.DatabaseManager;
-import GUI.MainMenu;
 import GUI.PatientSelect;
-import GUI.PatientTreatmentForm;
 
 /**
  *
@@ -32,7 +30,7 @@ public class DoctorInterface extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        editChart.setText("Edit Patient Chart");
+        editChart.setText("Edit Treatment Chart");
         editChart.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -41,7 +39,7 @@ public class DoctorInterface extends javax.swing.JFrame
             }
         });
 
-        viewChart.setText("View Patient Chart");
+        viewChart.setText("View Treatment Chart");
         viewChart.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -66,18 +64,18 @@ public class DoctorInterface extends javax.swing.JFrame
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(editChart, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGap(52, 52, 52)
-                                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGap(32, 32, 32)
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(viewChart, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                                                .addComponent(logOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                                .addContainerGap(34, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(27, 27, 27))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addGap(0, 18, Short.MAX_VALUE)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(editChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(viewChart, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                                                        .addComponent(logOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,8 +108,8 @@ public class DoctorInterface extends javax.swing.JFrame
 
     private void editChartActionPerformed(java.awt.event.ActionEvent evt)
     {
-        PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor", false);
-        treatmentForm.setVisible(true);
+        PatientSelect select = new PatientSelect("Chart-No-Load");
+        select.setVisible(true);
     }
 
     private void viewChartActionPerformed(java.awt.event.ActionEvent evt)
@@ -133,7 +131,6 @@ public class DoctorInterface extends javax.swing.JFrame
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton logOut;
     private javax.swing.JButton viewChart;
-    private javax.swing.JButton addSchedule;
 
     private DatabaseManager dbm;
 

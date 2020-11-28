@@ -12,8 +12,17 @@ import java.util.ArrayList;
 public class PatientTreatmentForm extends javax.swing.JFrame
 {
 
-    public PatientTreatmentForm(String employee, boolean loadChart)
+    public PatientTreatmentForm(String employee, String ssn)
     {
+        this.m_ssn = ssn;
+        this.m_employeeType = employee;
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
+
+    public PatientTreatmentForm(String employee, boolean loadChart, String ssn)
+    {
+        this.m_ssn = ssn;
         this.m_employeeType = employee;
         initComponents();
         if (loadChart)
@@ -333,8 +342,8 @@ public class PatientTreatmentForm extends javax.swing.JFrame
         dbm = new DatabaseManager();
         String height = feet.getText() + "' " + inches.getText() + "\"";
 
-        dbm.addTreatmentChart("1"/*TODO*/, height, weight.getText(), bloodPressure.getText(), reason.getText(),
-                                treatment.getText(), perscription.getText(), "1"/*TODO*/);
+        dbm.addTreatmentChart(Helper.generateId(m_ssn), height, weight.getText(), bloodPressure.getText(), reason.getText(),
+                                treatment.getText(), perscription.getText(), Helper.generateId(m_ssn));
         dbm.closeDB();
         this.dispose();
     }
@@ -352,8 +361,18 @@ public class PatientTreatmentForm extends javax.swing.JFrame
         {
             String height = chart.get(1);
             String[] fullHeight = height.split("\\s+");
-            feet.setText(fullHeight[0]);
-            inches.setText(fullHeight[1]);
+            switch (fullHeight.length)
+            {
+                case 2:
+                    inches.setText(fullHeight[1]);
+                case 1:
+                    feet.setText(fullHeight[0]);
+                    break;
+                default:
+                    ErrorScreen error = new ErrorScreen("No height provided\n");
+                    error.setVisible(true);
+                    return;
+            }
 
             weight.setText(chart.get(2));
             bloodPressure.setText(chart.get(3));
@@ -401,4 +420,5 @@ public class PatientTreatmentForm extends javax.swing.JFrame
     private String m_weight;
     private String m_bp;
     private String m_employeeType;
+    private String m_ssn;
 }
