@@ -12,7 +12,7 @@ TreatmentChart: ChartID, Height, Weight, BloodPressure, VisitReason, TreatmentCo
 PaymentInfo: ReferenceNumber, Name, Date, Amount, PaymentType, PatientID
 Report: ReportDate, NumberPatients, AmountEarned
 LogInInfo: EmployeeID, DoctorName, Password, Role
-DoctorSchedule: PatientID, Time, EmployeeID
+DoctorSchedule: PatientID, Time, EmployeeID, Patient Name
 */
 
 public class DatabaseManager {
@@ -372,7 +372,7 @@ public class DatabaseManager {
 
     public String getDoctorScheduleData(String identifier, int index)
     {
-        //DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
+        //DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID, 3 Patient Name
         String[] match = null;
 
         for(String[] line : doctorSchedule)
@@ -392,7 +392,7 @@ public class DatabaseManager {
 
     public String[] getDoctorScheduleAvailable(String identifier, int index)
     {
-        //DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
+        //DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID, 3 Patient Name
         String[] match = new String[16];
         int i = 0;
         for(String[] line : doctorSchedule)
@@ -533,9 +533,9 @@ public class DatabaseManager {
         logInInfo.add(a);
     }
 
-    public void addDoctorSchedule(String PatientID, String Time, String EmployeeID)
+    public void addDoctorSchedule(String PatientID, String Time, String EmployeeID, String patientName)
     {
-        String[] a = {PatientID, Time,  EmployeeID};
+        String[] a = {PatientID, Time,  EmployeeID, patientName};
         doctorSchedule.add(a);
     }
 
