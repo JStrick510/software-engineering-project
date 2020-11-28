@@ -309,7 +309,7 @@ public class Register extends javax.swing.JFrame
         }
         System.out.println("Selected role: " + role);
         dbm = new DatabaseManager();
-        dbm.addLogInInfo(m_id, Helper.passwordHash(m_password), role, name.toLowerCase());
+        dbm.addLogInInfo(m_id, name.toLowerCase(), Helper.passwordHash(m_password), role);
         dbm.closeDB();
         this.dispose();
     }
