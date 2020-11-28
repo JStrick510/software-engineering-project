@@ -5,11 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;  
 
 public class ReportGenerator extends TimerTask{
-	
-	
-	private int visits = 0;
-	private double money = 0;
-	
+
 	@Override
 	public void run() {
 		DatabaseManager DBM = new DatabaseManager();
@@ -17,27 +13,17 @@ public class ReportGenerator extends TimerTask{
 		//get the date
 		Date date = Calendar.getInstance().getTime();  
         DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy");  
-        String strDate = dateFormat.format(date);   
+        String strDate = dateFormat.format(date); 
+        
+        String[] info = DBM.getDailyInfo();
 		
-		DBM.addReport(strDate, Integer.toString(visits), Double.toString(money));
+		DBM.addReport(strDate, info[0], info[1]);
+		
+		DBM.resetDailyInfo();
 		
 		DBM.closeDB();
 		
-		this.visits = 0;
-		this.money = 0;
-		
 		System.out.println("test");
-	}
-	
-	public void addPatient()
-	{
-		this.visits++;
-	}
-	
-	public void addMoney(double moneyMade)
-	{
-		this.money+=moneyMade;
-		
 	}
 
 }

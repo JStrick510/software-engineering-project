@@ -1,8 +1,4 @@
-package GUI;
-
-import Database.DatabaseManager;
-import HCSUtility.Helper;
-import Payment.PaymentManager;
+package project1;
 
 import java.util.ArrayList;
 
@@ -382,6 +378,10 @@ public class PaymentInterface extends javax.swing.JFrame
         PaymentManager mgr = new PaymentManager(m_patientName, m_ssn, m_amount, m_date, m_cardNo, m_cvv, m_pin, m_paymentType, addr);
         m_refNum = mgr.retreiveRefNum();
         System.out.println("ref: " + m_refNum);
+        
+        DatabaseManager DBM = new DatabaseManager();
+        DBM.increaseDailyMoney(Double.parseDouble(m_amount));
+        DBM.closeDB();
 
         this.dispose();
     }

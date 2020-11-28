@@ -13,6 +13,7 @@ PaymentInfo: ReferenceNumber, Name, Date, Amount, PaymentType, PatientID
 Report: ReportDate, NumberPatients, AmountEarned
 LogInInfo: EmployeeID, DoctorName, Password, Role
 DoctorSchedule: PatientID, Time, EmployeeID, Patient Name
+DailyInfo: Patients, Money
 */
 
 public class DatabaseManager {
@@ -23,6 +24,7 @@ public class DatabaseManager {
     private ArrayList<String[]> report;
     private ArrayList<String[]> logInInfo;
     private ArrayList<String[]> doctorSchedule;
+    private ArrayList<String[]> dailyInfo;
 
     private ArrayList<String> currentLogIn;
 
@@ -35,6 +37,7 @@ public class DatabaseManager {
         report = new ArrayList<String[]>();
         logInInfo = new ArrayList<String[]>();
         doctorSchedule = new ArrayList<String[]>();
+        dailyInfo = new ArrayList<String[]>();
 
         currentLogIn = new ArrayList<String>();
 
@@ -45,6 +48,7 @@ public class DatabaseManager {
         File reportFile = new File("report.csv");
         File logInFile = new File("logInInfo.csv");
         File doctorScheduleFile = new File("doctorSchedule.csv");
+        File dailyInfoFile = new File("dailyInfo.csv");
         try
         {
             patientChartFile.createNewFile();
@@ -53,6 +57,7 @@ public class DatabaseManager {
             reportFile.createNewFile();
             logInFile.createNewFile();
             doctorScheduleFile.createNewFile();
+            dailyInfoFile.createNewFile();
         }
         catch (IOException e)
         {
@@ -72,6 +77,14 @@ public class DatabaseManager {
             this.logInInfo = readCSV(logInFile);
         if(doctorScheduleFile.length() != 0)
             this.doctorSchedule = readCSV(doctorScheduleFile);
+        if(dailyInfoFile.length() != 0)
+        	this.dailyInfo = readCSV(dailyInfoFile);
+        
+        if(dailyInfo.isEmpty())
+        {
+        	String[] zero = {"0", "0"};
+        	dailyInfo.add(zero);
+        }
     }
 
     public ArrayList<String[]> getlogInInfo()
@@ -187,6 +200,23 @@ public class DatabaseManager {
 
             writeCSV("doctorSchedule.csv", doctorScheduleContent);
         }
+        
+        if(dailyInfo != null) //assuming that databases will never be empty at the end, but just in case
+        {
+            ArrayList<String> dailyInfoContent = new ArrayList<String>();
+
+            for(int a = 0; a < dailyInfo.size(); a++)
+            {
+                String concArray = "";
+                for(int i = 0; i < dailyInfo.get(a).length; i++)
+                    concArray = concArray + "," + dailyInfo.get(a)[i];
+                concArray = concArray.substring(1,concArray.length()); //to get rid of the first ", " probably a better way to write this
+                concArray = concArray + "\n"; //so next entry is on next line
+                dailyInfoContent.add(concArray);
+            }
+
+            writeCSV("dailyInfo.csv", dailyInfoContent);
+        }
     }
 
     public ArrayList<String[]> readCSV(File fileName)
@@ -226,6 +256,36 @@ public class DatabaseManager {
         {
             e.printStackTrace();
         }
+    }
+    
+    public String[] getDailyInfo()
+    {
+        //DailyInfo: 0-Patients, 1-Money
+        return dailyInfo.get(0);
+    }
+    
+    public void resetDailyInfo()
+    {
+    	String[] zero = {"0", "0"};
+    	dailyInfo.set(0, zero);
+    }
+    
+    public void increaseDailyVisits()
+    {
+    	String[] current = dailyInfo.get(0);
+    	int visits = Integer.parseInt(current[0]);
+    	visits+=1;
+    	String[] updated = {Integer.toString(visits), current[1]};
+    	dailyInfo.set(0, updated);
+    }
+    
+    public void increaseDailyMoney(double moneyAdd)
+    {
+    	String[] current = dailyInfo.get(0);
+    	double money = Double.parseDouble(current[1]);
+    	money+=moneyAdd;
+    	String[] updated = {current[0], Double.toString(money)};
+    	dailyInfo.set(0, updated);
     }
 
     public String getPatientChartData(String identifier, int index)

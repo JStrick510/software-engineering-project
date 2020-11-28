@@ -1,9 +1,5 @@
-package GUI;
+package project1;
 
-/**
- *
- * @author Jared
- */
 public class MainMenu extends javax.swing.JFrame
 {
     public MainMenu()
@@ -114,6 +110,9 @@ public class MainMenu extends javax.swing.JFrame
     }
 
     public static void main(String args[]) {
+    	
+    	ReportManager RM = new ReportManager();
+    	
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -143,4 +142,5 @@ public class MainMenu extends javax.swing.JFrame
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton login;
     private javax.swing.JButton register;
+    
 }

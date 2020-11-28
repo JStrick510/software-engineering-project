@@ -1,14 +1,10 @@
-package Appointment;
-
-import Database.DatabaseManager;
-import Timer.ReportManager;
+package project1;
 
 import java.util.Arrays;
 import java.util.Hashtable;
 
 public class AppointmentManager
 {
-    ReportManager reportMan;
     Hashtable<String, Doctor> doctorsList = new Hashtable<String, Doctor>();
     Hashtable<String, Patient> patientList = new Hashtable<String, Patient>();
 
@@ -19,21 +15,6 @@ public class AppointmentManager
     public AppointmentManager()
     {
 
-    }
-
-    public AppointmentManager(ReportManager reportMan)
-    {
-        this.reportMan = reportMan;
-    }
-
-    public void setReportManager(ReportManager reportMan)
-    {
-        this.reportMan = reportMan;
-    }
-
-    public ReportManager getReportManager()
-    {
-        return this.reportMan;
     }
     //Method for adding Doctor to the list
     void addDoctor(String employeID)

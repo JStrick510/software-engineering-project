@@ -32,14 +32,5 @@ public class ReportManager {
 		//timer.cancel(); //this is needed at when the program closes to close the timer
 	}
 	
-	public void addPatientDoctor()
-	{
-		RG.addPatient();	
-	}
-	
-	public void addMoneyDoctor(double moneyMade)
-	{
-		RG.addMoney(moneyMade);	
-	}
 
 }
