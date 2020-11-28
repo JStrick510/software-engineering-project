@@ -117,11 +117,12 @@ public class PatientSelect extends javax.swing.JFrame
                 m_chart = dbm.getPatientChartLine(m_ssn);
                 break;
             case "Pay":
-                m_chart = dbm.getPaymentInfoLine(m_ssn);
+                m_chart = dbm.getPaymentInfoLine(Helper.generateId(m_ssn), 5);
                 break;
             case "Appointment":
                 m_chart = dbm.getDoctorScheduleLine(Helper.generateId(m_ssn));
                 break;
+            case "Chart-Load-Nurse":
             case "Chart":
                 String id = Helper.generateId(m_ssn);
                 m_chart = dbm.getTreatmentChartLine(Helper.generateId(m_ssn));
@@ -196,6 +197,10 @@ public class PatientSelect extends javax.swing.JFrame
             case "Chart":
                 PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor", true, m_ssn);
                 treatmentForm.setVisible(true);
+                break;
+            case "Chart-Load-Nurse":
+                PatientTreatmentForm treatmentForm4 = new PatientTreatmentForm("Nurse", true, m_ssn);
+                treatmentForm4.setVisible(true);
                 break;
             case "Chart-No-Load":
                 PatientTreatmentForm treatmentForm2 = new PatientTreatmentForm("Doctor", false, m_ssn);

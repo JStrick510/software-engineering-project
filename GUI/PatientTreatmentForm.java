@@ -314,12 +314,18 @@ public class PatientTreatmentForm extends javax.swing.JFrame
 
     private void reasonMouseClicked(java.awt.event.MouseEvent evt)
     {
-        reason.setText("");
+        if (!m_employeeType.equals("Nurse"))
+        {
+            reason.setText("");
+        }
     }
 
     private void treatmentMouseClicked(java.awt.event.MouseEvent evt)
     {
-        treatment.setText("");
+        if (!m_employeeType.equals("Nurse"))
+        {
+            treatment.setText("");
+        }
     }
 
     private void feetMouseClicked(java.awt.event.MouseEvent evt)
@@ -334,7 +340,10 @@ public class PatientTreatmentForm extends javax.swing.JFrame
 
     private void perscriptionMouseClicked(java.awt.event.MouseEvent evt)
     {
-        perscription.setText("");
+        if (!m_employeeType.equals("Nurse"))
+        {
+            perscription.setText("");
+        }
     }
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt)

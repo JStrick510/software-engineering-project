@@ -96,7 +96,7 @@ public class NurseInterface extends javax.swing.JFrame
 
     private void viewPatientActionPerformed(java.awt.event.ActionEvent evt)
     {
-        PatientSelect select = new PatientSelect("Patient");
+        PatientSelect select = new PatientSelect("Chart-Load-Nurse");
         select.setVisible(true);
     }
 
