@@ -1,8 +1,8 @@
 package Appointment;
 
 import Database.DatabaseManager;
+import Timer.ReportManager;
 
-import java.sql.Time;
 import java.util.Arrays;
 import java.util.Hashtable;
 
@@ -78,11 +78,11 @@ public class AppointmentManager
 
     }
 
-    public void markAppointment(String patientID, String timeSlot, String EmployeeID )
+    public void markAppointment(String patientID, String timeSlot, String EmployeeID, String patientName)
     {
 
         DatabaseManager DataMan = new DatabaseManager();
-        DataMan.addDoctorSchedule(patientID, timeSlot, EmployeeID);
+        DataMan.addDoctorSchedule(patientID, timeSlot, EmployeeID, patientName);
         System.out.println("appointment created for Dr." + EmployeeID + " with patient " + patientID + " at " + timeSlot + "\n");
         DataMan.closeDB();
 
@@ -102,14 +102,14 @@ public class AppointmentManager
         String app = "Patient: " + appointmentLine[0] + " Time: " + appointmentLine[1] + "Doctor: " + appointmentLine[2];
         return app;
     }
-    
-    public void modifyAppopintment(String patientID, String Time, String employeeID)
+
+    public void modifyAppopintment(String patientID, String Time, String employeeID, String patientName)
     {
         DatabaseManager DataMan = new DatabaseManager();
         DataMan.deleteDoctorSchedule(patientID);
-        DataMan.addDoctorSchedule(patientID, Time, employeeID);
+        DataMan.addDoctorSchedule(patientID, Time, employeeID, patientName);
     }
-    
-    
+
+
 
 }
