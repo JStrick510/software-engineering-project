@@ -289,9 +289,24 @@ public class MakeAppointment extends javax.swing.JFrame
             {
                 String entireName = chart.get(3);
                 String[] fullName = entireName.split("\\s+");
-                fName.setText(fullName[0]);
-                middleInitial.setText(fullName[1]);
-                lName.setText(fullName[2]);
+                switch (fullName.length)
+                {
+                    case 3:
+                        lName.setText(fullName[2]);
+                        middleInitial.setText(fullName[1]);
+                        fName.setText(fullName[0]);
+                        break;
+                    case 2:
+                        lName.setText(fullName[1]);
+                    case 1:
+                        fName.setText(fullName[0]);
+                        break;
+                    default:
+                        ErrorScreen error = new ErrorScreen("No patient name");
+                        error.setVisible(true);
+                        return;
+
+                }
                 time.setSelectedItem(chart.get(1));
                 dbm.closeDB();
             }
