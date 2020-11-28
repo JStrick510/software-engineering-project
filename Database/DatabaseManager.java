@@ -397,7 +397,7 @@ public class DatabaseManager {
         int i = 0;
         for(String[] line : doctorSchedule)
         {
-            if(line[3].equals(identifier)) //assuming that all primary keys will be the first item
+            if(line[2].equals(identifier)) //assuming that all primary keys will be the first item
             {
                 match[i] = line[index].trim();
                 i++;
