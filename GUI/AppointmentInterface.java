@@ -136,7 +136,6 @@ public class AppointmentInterface extends javax.swing.JFrame
         String avail = m_timeSlot.substring(0, index);
         for (String line : availability)
         {
-            System.out.println(line);
             if (line.equals(avail))
             {
                 MakeAppointment makeAppointment = new MakeAppointment(doctorName.getText());
