@@ -379,6 +379,10 @@ public class PatientTreatmentForm extends javax.swing.JFrame
             reason.setText(chart.get(4));
             treatment.setText(chart.get(5));
             perscription.setText(chart.get(6));
+
+            dbm = new DatabaseManager();
+            dbm.deleteTreatmentChart(Helper.generateId(m_ssn));
+            dbm.closeDB();
         }
         catch (Exception e)
         {
