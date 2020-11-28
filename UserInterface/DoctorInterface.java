@@ -29,7 +29,6 @@ public class DoctorInterface extends javax.swing.JFrame
         viewChart = new javax.swing.JButton();
         logOut = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        addSchedule = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,8 +61,6 @@ public class DoctorInterface extends javax.swing.JFrame
 
         jLabel1.setText("Doctor Interface");
 
-        addSchedule.setText("Add Schedule");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -79,7 +76,6 @@ public class DoctorInterface extends javax.swing.JFrame
                                                         .addGap(32, 32, 32)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                                 .addComponent(viewChart, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                                                .addComponent(addSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(logOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                                 .addContainerGap(34, Short.MAX_VALUE))
         );
@@ -92,11 +88,9 @@ public class DoctorInterface extends javax.swing.JFrame
                                 .addComponent(editChart)
                                 .addGap(18, 18, 18)
                                 .addComponent(viewChart)
-                                .addGap(18, 18, 18)
-                                .addComponent(addSchedule)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                .addGap(35, 35, 35)
                                 .addComponent(logOut)
-                                .addGap(19, 19, 19))
+                                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -112,6 +106,7 @@ public class DoctorInterface extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>
+
 
     private void editChartActionPerformed(java.awt.event.ActionEvent evt)
     {
