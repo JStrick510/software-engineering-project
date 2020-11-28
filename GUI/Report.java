@@ -1,5 +1,7 @@
 package GUI;
 
+import Database.DatabaseManager;
+
 /**
  *
  * @author Jared
@@ -65,10 +67,11 @@ public class Report extends javax.swing.JFrame
 
     private void populateReport()
     {
-
     }
 
     private javax.swing.JButton close;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea report;
+
+    private DatabaseManager dbm;
 }
