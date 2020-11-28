@@ -1,5 +1,6 @@
 package GUI;
 
+import Appointment.AppointmentManager;
 import Database.DatabaseManager;
 import HCSUtility.Helper;
 
@@ -123,7 +124,6 @@ public class PatientSelect extends javax.swing.JFrame
                 break;
             case "Chart":
                 String id = Helper.generateId(m_ssn);
-                System.out.println("id: " + id);
                 m_chart = dbm.getTreatmentChartLine(Helper.generateId(m_ssn));
                 break;
             default:
@@ -190,8 +190,8 @@ public class PatientSelect extends javax.swing.JFrame
                 appt.setVisible(true);
                 break;
             case "Cancel":
-                MakeAppointment appt2 = new MakeAppointment("", m_ssn, true);
-                appt2.setVisible(true);
+                AppointmentManager mgr = new AppointmentManager();
+                mgr.clearAppointment(Helper.generateId(m_ssn));
                 break;
             case "Chart":
                 PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor", true, m_ssn);

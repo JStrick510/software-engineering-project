@@ -15,37 +15,17 @@ public class MakeAppointment extends javax.swing.JFrame
     public MakeAppointment(String doctorName)
     {
         m_loadChart = false;
-        m_cancelAppt = false;
         m_doctorName = doctorName;
         initComponents();
         if (!m_doctorName.isEmpty())
         {
             populateEmployeeID();
-        }
-        this.setLocationRelativeTo(null);
-    }
-
-    public MakeAppointment(String doctorName, String ssn, boolean cancel)
-    {
-        m_ssn = ssn;
-        m_loadChart = false;
-        m_cancelAppt = cancel;
-        m_doctorName = doctorName;
-        initComponents();
-        if (!m_doctorName.isEmpty())
-        {
-            populateEmployeeID();
-        }
-        if (m_loadChart)
-        {
-            removeAppt();
         }
         this.setLocationRelativeTo(null);
     }
 
     public MakeAppointment(String doctorName, boolean loadChart, String ssn)
     {
-        m_cancelAppt = false;
         m_loadChart = loadChart;
         m_doctorName = doctorName;
         m_ssn = ssn;
@@ -334,11 +314,6 @@ public class MakeAppointment extends javax.swing.JFrame
         dbm.closeDB();
     }
 
-    private void removeAppt()
-    {
-        mgr.clearAppointment(Helper.generateId(m_ssn));
-    }
-
     private javax.swing.JButton cancelAppt;
     private javax.swing.JButton cancel;
     private javax.swing.JTextField doctorName;
@@ -356,7 +331,6 @@ public class MakeAppointment extends javax.swing.JFrame
     private String m_ssn;
     private String m_id;
     private boolean m_loadChart;
-    private boolean m_cancelAppt;
 
     private AppointmentManager mgr;
     private DatabaseManager dbm;
