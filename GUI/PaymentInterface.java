@@ -391,6 +391,7 @@ public class PaymentInterface extends javax.swing.JFrame
 
         DatabaseManager DBM = new DatabaseManager();
         DBM.increaseDailyMoney(Double.parseDouble(m_amount));
+        DBM.increaseDailyVisits();
         DBM.closeDB();
 
         this.dispose();
