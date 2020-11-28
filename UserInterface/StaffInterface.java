@@ -204,8 +204,6 @@ public class StaffInterface extends javax.swing.JFrame
         dbm = new DatabaseManager();
         dbm.removeCurrentLogIn(m_employeeId);
         dbm.closeDB();
-        MainMenu main = new MainMenu();
-        main.setVisible(true);
         this.dispose();
     }
 
