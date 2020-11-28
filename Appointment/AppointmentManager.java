@@ -1,4 +1,6 @@
-package project1;
+package Appointment;
+
+import Database.DatabaseManager;
 
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -68,7 +70,7 @@ public class AppointmentManager
         DataMan.closeDB();
 
     }
-    public void clearAppointment(String patientID, Boolean state)
+    public void clearAppointment(String patientID, boolean state)
     {
         DatabaseManager DataMan = new DatabaseManager();
         if (state == true)
