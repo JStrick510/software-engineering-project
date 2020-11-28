@@ -247,6 +247,7 @@ public class PatientChartForm extends javax.swing.JFrame
         );
 
         pack();
+        m_condition = healthCondition.getItemAt(healthCondition.getSelectedIndex());
     }// </editor-fold>
 
     private void fNameMousePressed(java.awt.event.MouseEvent evt)
@@ -380,7 +381,6 @@ public class PatientChartForm extends javax.swing.JFrame
                     ErrorScreen error = new ErrorScreen("No patient name");
                     error.setVisible(true);
                     return;
-
             }
 
             String address = chart.get(6);
@@ -394,6 +394,10 @@ public class PatientChartForm extends javax.swing.JFrame
             zipCode.setText(stateAddr[1]);
 
             insurance.setText(chart.get(8));
+
+            dbm = new DatabaseManager();
+            dbm.deletePatientChart(chart.get(0));
+            dbm.closeDB();
         }
         catch (Exception ex)
         {
