@@ -1,4 +1,4 @@
- package project1;
+package project1;
 
 import java.util.*;
 import java.text.DateFormat;  
@@ -6,9 +6,9 @@ import java.text.SimpleDateFormat;
 
 public class ReportGenerator extends TimerTask{
 	
-	private ArrayList<String> doctors = new ArrayList<>();
-	private ArrayList<Integer> visits = new ArrayList<>();
-	private ArrayList<Double> money = new ArrayList<>();
+	
+	private int visits = 0;
+	private double money = 0;
 	
 	@Override
 	public void run() {
@@ -19,43 +19,24 @@ public class ReportGenerator extends TimerTask{
         DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy");  
         String strDate = dateFormat.format(date);   
 		
-		for(int i = 0; i < doctors.size(); i++)
-		{
-			DBM.addReport(strDate, doctors.get(i), Integer.toString(visits.get(i)), Double.toString(money.get(i)));
-		}
+		DBM.addReport(strDate, Integer.toString(visits), Double.toString(money));
 		
 		DBM.closeDB();
 		
-		doctors.clear();
-		visits.clear();
-		money.clear();
+		this.visits = 0;
+		this.money = 0;
 		
 		System.out.println("test");
 	}
 	
-	public void addPatientDoctor(String doctorName)
+	public void addPatient()
 	{
-		if(doctors.contains(doctorName))
-			visits.set(doctors.indexOf(doctorName), visits.get(doctors.indexOf(doctorName)) + 1);
-		else
-		{
-			doctors.add(doctorName);
-			visits.add(1);
-			money.add(0.0);
-		}
-		
+		this.visits++;
 	}
 	
-	public void addMoneyDoctor(String doctorName, Double moneyMade)
+	public void addMoney(double moneyMade)
 	{
-		if(doctors.contains(doctorName))
-			money.set(doctors.indexOf(doctorName), money.get(doctors.indexOf(doctorName)) + moneyMade);
-		else
-		{
-			doctors.add(doctorName);
-			visits.add(0);
-			money.add(moneyMade);
-		}
+		this.money+=moneyMade;
 		
 	}
 

@@ -32,14 +32,14 @@ public class ReportManager {
 		//timer.cancel(); //this is needed at when the program closes to close the timer
 	}
 	
-	public void addPatientDoctor(String doctorName)
+	public void addPatientDoctor()
 	{
-		RG.addPatientDoctor(doctorName);	
+		RG.addPatient();	
 	}
 	
-	public void addMoneyDoctor(String doctorName, int moneyMade)
+	public void addMoneyDoctor(double moneyMade)
 	{
-		RG.addMoneyDoctor(doctorName, moneyMade);	
+		RG.addMoney(moneyMade);	
 	}
 
 }
