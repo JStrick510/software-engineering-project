@@ -87,5 +87,6 @@ public class AppointmentManager
         DatabaseManager DataMan = new DatabaseManager();
         DataMan.deleteDoctorSchedule(patientID);
         DataMan.addDoctorSchedule(patientID, Time, employeeID, patientName);
+        DataMan.closeDB();
     }
 }
