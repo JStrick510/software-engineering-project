@@ -127,6 +127,13 @@ public class PatientSelect extends javax.swing.JFrame
         }
         dbm.closeDB();
 
+        if (m_chart == null)
+        {
+            ErrorScreen error = new ErrorScreen("Patient with ssn: " + m_ssn + " does not exist\n");
+            error.setVisible(true);
+            return;
+        }
+
         returnID();
 
         this.dispose();
@@ -152,6 +159,13 @@ public class PatientSelect extends javax.swing.JFrame
             System.out.println("Could not create file");
             ErrorScreen err = new ErrorScreen(e.toString());
             err.setVisible(true);
+            return;
+        }
+        catch (Exception ex)
+        {
+            ErrorScreen error = new ErrorScreen(ex.toString());
+            error.setVisible(true);
+            return;
         }
         switch (m_selectFor)
         {
