@@ -3,6 +3,7 @@ package UserInterface;
 
 import Database.DatabaseManager;
 import GUI.MainMenu;
+import GUI.Report;
 
 /**
  *
@@ -78,6 +79,8 @@ public class CEOInterface extends javax.swing.JFrame
 
     private void viewReportActionPerformed(java.awt.event.ActionEvent evt)
     {
+        Report report = new Report();
+        report.setVisible(true);
     }
 
     private void logOutActionPerformed(java.awt.event.ActionEvent evt)
