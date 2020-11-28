@@ -332,6 +332,7 @@ public class PatientChartForm extends javax.swing.JFrame
 
         // Initalize DBM
         dbm = new DatabaseManager();
+        dbm.deletePatientChart(m_ssn);
 
         // Format the name and address into a single string
         String fullName = m_firstName + " " + m_middleInitial + " " + m_firstName;
@@ -395,9 +396,6 @@ public class PatientChartForm extends javax.swing.JFrame
 
             insurance.setText(chart.get(8));
 
-            dbm = new DatabaseManager();
-            dbm.deletePatientChart(chart.get(0));
-            dbm.closeDB();
         }
         catch (Exception ex)
         {

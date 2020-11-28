@@ -340,6 +340,7 @@ public class PatientTreatmentForm extends javax.swing.JFrame
     private void submitActionPerformed(java.awt.event.ActionEvent evt)
     {
         dbm = new DatabaseManager();
+        dbm.deleteTreatmentChart(Helper.generateId(m_ssn));
         String height = feet.getText() + "' " + inches.getText() + "\"";
 
         dbm.addTreatmentChart(Helper.generateId(m_ssn), height, weight.getText(), bloodPressure.getText(), reason.getText(),
@@ -380,9 +381,6 @@ public class PatientTreatmentForm extends javax.swing.JFrame
             treatment.setText(chart.get(5));
             perscription.setText(chart.get(6));
 
-            dbm = new DatabaseManager();
-            dbm.deleteTreatmentChart(Helper.generateId(m_ssn));
-            dbm.closeDB();
         }
         catch (Exception e)
         {

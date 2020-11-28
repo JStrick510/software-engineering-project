@@ -1,4 +1,8 @@
-package project1;
+package GUI;
+
+import Database.DatabaseManager;
+import HCSUtility.Helper;
+import Payment.PaymentManager;
 
 import java.util.ArrayList;
 
@@ -287,6 +291,7 @@ public class PaymentInterface extends javax.swing.JFrame
             amountOwed.setText(chart.get(3));
             amountPaid.setText(chart.get(3));
             paymentOption.setSelectedItem(chart.get(4));
+
         }
         catch (Exception e)
         {
@@ -375,10 +380,15 @@ public class PaymentInterface extends javax.swing.JFrame
         String addr = m_street + " " + m_city + ", " + m_state + " " + m_zip;
         m_ssn = ssn.getText();
 
+        dbm = new DatabaseManager();
+        dbm.deletePaymentInfo(Helper.generateId(m_cardNo+m_cvv+m_pin));
+        dbm.closeDB();
+
         PaymentManager mgr = new PaymentManager(m_patientName, m_ssn, m_amount, m_date, m_cardNo, m_cvv, m_pin, m_paymentType, addr);
         m_refNum = mgr.retreiveRefNum();
+
         System.out.println("ref: " + m_refNum);
-        
+
         DatabaseManager DBM = new DatabaseManager();
         DBM.increaseDailyMoney(Double.parseDouble(m_amount));
         DBM.closeDB();
