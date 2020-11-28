@@ -65,7 +65,7 @@ public class AppointmentManager
 
         DatabaseManager DataMan = new DatabaseManager();
         busy = DataMan.getDoctorScheduleAvailable(EmployeeID, 1);
-        String[] avail = {"9a","9:30a","10a","10:30a","11a", "11:30a","12p","12:30p","1p","1:30p","2:00p","2:30p","3:00p","3:30p","4p","4:30p"};
+        String[] avail = {"9am","9:30am","10am","10:30am","11am", "11:30am","12pm","12:30pm","1pm","1:30pm","2:00pm","2:30pm","3:00pm","3:30pm","4pm","4:30pm"};
         for (int i = 0; i < avail.length; i++)
         {
             if(Arrays.asList(busy).contains(avail[i]))
