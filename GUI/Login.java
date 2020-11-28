@@ -130,7 +130,7 @@ public class Login extends javax.swing.JFrame
         dbm = new DatabaseManager();
         String hashed = Helper.passwordHash(m_password);
         System.out.println(hashed);
-        if (hashed.equals(dbm.getLogInInfoData(m_id, 1).trim()))
+        if (hashed.equals(dbm.getLogInInfoData(m_id, 2).trim()))
         {
             dbm.addCurrentLogIn(m_id);
         }
@@ -143,7 +143,7 @@ public class Login extends javax.swing.JFrame
 
         }
         System.out.println("Successfully logged in");
-        String role = dbm.getLogInInfoData(m_id, 2);
+        String role = dbm.getLogInInfoData(m_id, 3);
         System.out.println("Role is: " + role);
         dbm.closeDB();
         switch (role.trim())

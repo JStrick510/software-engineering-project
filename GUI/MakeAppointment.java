@@ -12,9 +12,44 @@ import java.util.ArrayList;
  */
 public class MakeAppointment extends javax.swing.JFrame
 {
-    public MakeAppointment(String doctorName, boolean loadChart)
+    public MakeAppointment(String doctorName)
     {
+        m_loadChart = false;
+        m_cancelAppt = false;
         m_doctorName = doctorName;
+        initComponents();
+        if (!m_doctorName.isEmpty())
+        {
+            populateEmployeeID();
+        }
+        this.setLocationRelativeTo(null);
+    }
+
+    public MakeAppointment(String doctorName, String ssn, boolean cancel)
+    {
+        m_ssn = ssn;
+        m_loadChart = false;
+        m_cancelAppt = cancel;
+        m_doctorName = doctorName;
+        initComponents();
+        if (!m_doctorName.isEmpty())
+        {
+            populateEmployeeID();
+        }
+        if (m_loadChart)
+        {
+            removeAppt();
+        }
+        this.setLocationRelativeTo(null);
+        this.dispose();
+    }
+
+    public MakeAppointment(String doctorName, boolean loadChart, String ssn)
+    {
+        m_cancelAppt = false;
+        m_loadChart = loadChart;
+        m_doctorName = doctorName;
+        m_ssn = ssn;
         initComponents();
         if (!m_doctorName.isEmpty())
         {
@@ -220,7 +255,14 @@ public class MakeAppointment extends javax.swing.JFrame
         String patientId = Helper.generateId(m_ssn);
         int index = m_time.indexOf("-");
         String avail = m_time.substring(0, index);
-        mgr.markAppointment(patientId, avail, m_id);
+        if (m_loadChart)
+        {
+            mgr.markAppointment(patientId, avail, m_id, m_name);
+        }
+        else
+        {
+            mgr.modifyAppopintment(patientId, avail, m_id, m_name);
+        }
         this.dispose();
     }
 
@@ -235,6 +277,31 @@ public class MakeAppointment extends javax.swing.JFrame
 
         try
         {
+            m_id = chart.get(2);
+            dbm = new DatabaseManager();
+            m_doctorName = dbm.getLogInInfoData(m_id, 1);
+            doctorName.setText(m_doctorName);
+            employeeId.setText(m_id);
+            ssn.setText(m_ssn);
+
+            String name = dbm.getPatientChartData(m_ssn, 5);
+            if (!name.equals("ERROR"))
+            {
+                String entireName = chart.get(3);
+                String[] fullName = entireName.split("\\s+");
+                fName.setText(fullName[0]);
+                middleInitial.setText(fullName[1]);
+                lName.setText(fullName[2]);
+                time.setSelectedItem(chart.get(1));
+                dbm.closeDB();
+            }
+            else
+            {
+                ErrorScreen error = new ErrorScreen("Failed to find patient");
+                error.setVisible(true);
+                dbm.closeDB();
+                return;
+            }
         }
         catch (Exception e)
         {
@@ -253,6 +320,12 @@ public class MakeAppointment extends javax.swing.JFrame
         dbm.closeDB();
     }
 
+    private void removeAppt()
+    {
+        mgr.clearAppointment(Helper.generateId(m_ssn));
+    }
+
+    private javax.swing.JButton cancelAppt;
     private javax.swing.JButton cancel;
     private javax.swing.JTextField doctorName;
     private javax.swing.JTextField employeeId;
@@ -268,6 +341,8 @@ public class MakeAppointment extends javax.swing.JFrame
     private String m_name;
     private String m_ssn;
     private String m_id;
+    private boolean m_loadChart;
+    private boolean m_cancelAppt;
 
     private AppointmentManager mgr;
     private DatabaseManager dbm;

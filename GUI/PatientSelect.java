@@ -1,6 +1,7 @@
 package GUI;
 
 import Database.DatabaseManager;
+import HCSUtility.Helper;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -117,7 +118,7 @@ public class PatientSelect extends javax.swing.JFrame
                 m_chart = dbm.getPaymentInfoLine(m_ssn);
                 break;
             case "Appointment":
-                //TODO
+                m_chart = dbm.getDoctorScheduleLine(Helper.generateId(m_ssn));
                 break;
             case "Chart":
                 m_chart = dbm.getTreatmentChartLine(m_ssn);
@@ -178,8 +179,12 @@ public class PatientSelect extends javax.swing.JFrame
                 pay.setVisible(true);
                 break;
             case "Appointment":
-                AppointmentInterface appt = new AppointmentInterface(true);
+                MakeAppointment appt = new MakeAppointment("", true, m_ssn);
                 appt.setVisible(true);
+                break;
+            case "Cancel":
+                MakeAppointment appt2 = new MakeAppointment("", m_ssn, true);
+                appt2.setVisible(true);
                 break;
             case "Chart":
                 PatientTreatmentForm treatmentForm = new PatientTreatmentForm("Doctor", true);

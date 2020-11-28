@@ -10,9 +10,8 @@ import Database.DatabaseManager;
  */
 public class AppointmentInterface extends javax.swing.JFrame
 {
-    public AppointmentInterface(boolean loadChart)
+    public AppointmentInterface()
     {
-        m_loadChart = loadChart;
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -140,7 +139,7 @@ public class AppointmentInterface extends javax.swing.JFrame
             System.out.println(line);
             if (line.equals(avail))
             {
-                MakeAppointment makeAppointment = new MakeAppointment(doctorName.getText(), m_loadChart);
+                MakeAppointment makeAppointment = new MakeAppointment(doctorName.getText());
                 makeAppointment.setVisible(true);
                 this.dispose();
                 return;
@@ -167,5 +166,4 @@ public class AppointmentInterface extends javax.swing.JFrame
     private AppointmentManager mgr;
 
     private String m_timeSlot;
-    private boolean m_loadChart;
 }
