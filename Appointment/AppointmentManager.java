@@ -68,9 +68,13 @@ public class AppointmentManager
         DataMan.closeDB();
 
     }
-    public void clearAppointment(String patientID)
+    public void clearAppointment(String patientID, int state)
     {
         DatabaseManager DataMan = new DatabaseManager();
+        if (state == 0)
+        {
+            DataMan.increaseDailyVisits();
+        }
         DataMan.deleteDoctorSchedule(patientID);
         DataMan.closeDB();
     }
