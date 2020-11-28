@@ -1,6 +1,8 @@
 package Appointment;
 
 import Database.DatabaseManager;
+import Timer.ReportManager;
+
 import java.util.Arrays;
 import java.util.Hashtable;
 
@@ -38,8 +40,8 @@ public class AppointmentManager
     {
         doctorsList.put(employeID, new Doctor(employeID));
     }
-    
-    
+
+
     //Method for retreiving Doctor from list based on name
     Doctor getDoctor(String employeID)
     {
@@ -107,7 +109,7 @@ public class AppointmentManager
         double num = getDoctor(employeeID).getdailyEarnings();
         num = num + amount;
         getDoctor(employeeID).setdailyEarnings(num);
-        reportMan.addMoneyDoctor(employeeID, amount);
+        reportMan.addMoneyDoctor(amount);
     }
     //returns the amount of money a doctor has earned throughout the day and resets the value to 0 for the next day
     public double getdailyEarnings(String employeeID)
