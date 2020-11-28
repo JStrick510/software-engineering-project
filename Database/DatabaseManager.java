@@ -1,4 +1,4 @@
-package Database;
+package project1;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -77,6 +77,11 @@ public class DatabaseManager {
     public ArrayList<String[]> getlogInInfo()
     {
         return new ArrayList<String[]>(logInInfo);
+    }
+    
+    public ArrayList<String[]> getReport()
+    {
+    	return new ArrayList<String[]>(report);
     }
 
     public void closeDB()
