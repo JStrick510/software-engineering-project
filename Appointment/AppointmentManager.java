@@ -1,6 +1,8 @@
 package Appointment;
 
 import Database.DatabaseManager;
+
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Hashtable;
 
@@ -85,43 +87,29 @@ public class AppointmentManager
         DataMan.closeDB();
 
     }
-
-    public void clearAppointment(String patientID, int state)
+    public void clearAppointment(String patientID)
     {
         DatabaseManager DataMan = new DatabaseManager();
-        if (state == 0)
-        {
-            getDoctor(DataMan.getDoctorScheduleData(patientID, 2)).numPatients++;
-        }
         DataMan.deleteDoctorSchedule(patientID);
         DataMan.closeDB();
     }
 
-    public int getNumAppoint(String employeeID)
+    public String getAppointment(String patientID)
     {
-        return getDoctor(employeeID).numPatients;
+        DatabaseManager DataMan = new DatabaseManager();
+        String[] appointmentLine;
+        appointmentLine = DataMan.getDoctorScheduleLine(patientID);
+        String app = "Patient: " + appointmentLine[0] + " Time: " + appointmentLine[1] + "Doctor: " + appointmentLine[2];
+        return app;
     }
-    //adds a specified amount of money to the earnings of a specified doctor
-    public void addEarnings(String employeeID, double amount)
+    
+    public void modifyAppopintment(String patientID, String Time, String employeeID)
     {
-        double num = getDoctor(employeeID).getdailyEarnings();
-        num = num + amount;
-        getDoctor(employeeID).setdailyEarnings(num);
-        reportMan.addMoneyDoctor(employeeID, amount);
+        DatabaseManager DataMan = new DatabaseManager();
+        DataMan.deleteDoctorSchedule(patientID);
+        DataMan.addDoctorSchedule(patientID, Time, employeeID);
     }
-    //returns the amount of money a doctor has earned throughout the day and resets the value to 0 for the next day
-    public double getdailyEarnings(String employeeID)
-    {
-        double num;
-        num = getDoctor(employeeID).dailyEarnings;
-        getDoctor(employeeID).setdailyEarnings(0.0);
-        return num;
-    }
-    //returns the current value of the doctors daily earnings
-    public double peekEarnings(String employeeID)
-    {
-        return getDoctor(employeeID).dailyEarnings;
-    }
-
+    
+    
 
 }
