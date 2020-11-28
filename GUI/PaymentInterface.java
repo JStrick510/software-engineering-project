@@ -1,8 +1,8 @@
- package GUI;
+package GUI;
 
- import Database.DatabaseManager;
- import HCSUtility.Helper;
- import Payment.PaymentManager;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
+import Payment.PaymentManager;
 
 import java.util.ArrayList;
 
@@ -377,13 +377,12 @@ public class PaymentInterface extends javax.swing.JFrame
         m_date = frmt.format(date);
 
         String addr = m_street + " " + m_city + ", " + m_state + " " + m_zip;
-        PaymentManager mgr = new PaymentManager(m_patientName, m_amount, m_date, m_cardNo, m_cvv, m_pin, m_paymentType, addr);
+        m_ssn = ssn.getText();
+
+        PaymentManager mgr = new PaymentManager(m_patientName, m_ssn, m_amount, m_date, m_cardNo, m_cvv, m_pin, m_paymentType, addr);
         m_refNum = mgr.retreiveRefNum();
         System.out.println("ref: " + m_refNum);
 
-        dbm = new DatabaseManager();
-        dbm.addPaymentInfo(m_refNum, m_patientName, m_date, m_amount, m_paymentType, "1"/*TODO: need a way to find patient type*/);
-        dbm.closeDB();
         this.dispose();
     }
 
@@ -450,9 +449,9 @@ public class PaymentInterface extends javax.swing.JFrame
     private String m_date;
     private String m_refNum;
     private String m_amount;
-    private String m_patientId;
     private String m_patientName;
     private String m_paymentType;
+    private String m_ssn;
 
     private String m_cardNo;
     private String m_cvv;

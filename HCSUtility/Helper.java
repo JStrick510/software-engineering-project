@@ -1,6 +1,6 @@
- package HCSUtility;
+package HCSUtility;
 
- import GUI.ErrorScreen;
+import GUI.ErrorScreen;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.UUID;
 
 final public class Helper
 {
@@ -44,5 +45,15 @@ final public class Helper
             err.setVisible(true);
             return new ArrayList<String>();
         }
+    }
+
+    static public String generateId(String input)
+    {
+        return UUID.nameUUIDFromBytes(input.getBytes()).toString();
+    }
+
+    static public String passwordHash(String password)
+    {
+        return UUID.nameUUIDFromBytes(password.getBytes()).toString();
     }
 }

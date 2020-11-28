@@ -4,7 +4,6 @@ import Database.DatabaseManager;
 import HCSUtility.Helper;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class PatientChartForm extends javax.swing.JFrame
 {
@@ -338,16 +337,16 @@ public class PatientChartForm extends javax.swing.JFrame
         String fullAddress = m_streetAddress + " " + m_city + ", " + m_state + " " + m_zipCode;
 
         // Create unique id's based on the patients ssn and the current time in seconds
-        String patientId = UUID.nameUUIDFromBytes(m_ssn.getBytes()).toString();
+        String patientId = Helper.generateId(m_ssn);
         long currTime = System.currentTimeMillis() / 1000;
         String time = Long.toString(currTime);
-        String chartId = UUID.nameUUIDFromBytes(time.getBytes()).toString();
+        String chartId = Helper.generateId(time);
 
         System.out.println("Patient: " + patientId + " chart: " + chartId);
 
         // Add to DB
         dbm.addPaitentChart(m_ssn,  patientId, m_email, m_phoneNum,
-                            m_condition, fullName, fullAddress, m_insurance, chartId);
+                            m_condition, fullName.toLowerCase(), fullAddress, m_insurance, chartId);
         dbm.closeDB();
         this.dispose();
     }

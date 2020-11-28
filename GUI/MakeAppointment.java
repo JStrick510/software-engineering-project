@@ -1,11 +1,10 @@
- package GUI;
+package GUI;
 
- import Appointment.AppointmentManager;
- import Database.DatabaseManager;
- import HCSUtility.Helper;
+import Appointment.AppointmentManager;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  *
@@ -218,7 +217,7 @@ public class MakeAppointment extends javax.swing.JFrame
             m_doctorName = tempDoc;
         }
 
-        String patientId = UUID.nameUUIDFromBytes(m_ssn.getBytes()).toString();
+        String patientId = Helper.generateId(m_ssn);
         int index = m_time.indexOf("-");
         String avail = m_time.substring(0, index);
         mgr.markAppointment(patientId, avail, m_id);
