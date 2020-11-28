@@ -18,6 +18,10 @@ public class MakeAppointment extends javax.swing.JFrame
         m_cancelAppt = false;
         m_doctorName = doctorName;
         initComponents();
+        if (!m_doctorName.isEmpty())
+        {
+            populateEmployeeID();
+        }
         this.setLocationRelativeTo(null);
     }
 
@@ -28,6 +32,10 @@ public class MakeAppointment extends javax.swing.JFrame
         m_cancelAppt = cancel;
         m_doctorName = doctorName;
         initComponents();
+        if (!m_doctorName.isEmpty())
+        {
+            populateEmployeeID();
+        }
         if (m_loadChart)
         {
             removeAppt();
@@ -42,6 +50,11 @@ public class MakeAppointment extends javax.swing.JFrame
         m_doctorName = doctorName;
         m_ssn = ssn;
         initComponents();
+        if (!m_doctorName.isEmpty())
+        {
+            populateEmployeeID();
+        }
+
         if (loadChart)
         {
             populateChart();
@@ -227,13 +240,12 @@ public class MakeAppointment extends javax.swing.JFrame
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt)
     {
-        populateEmployeeID();
         mgr = new AppointmentManager();
         m_name = fName.getText() + " " + middleInitial.getText() + " " + lName.getText();
         m_ssn = ssn.getText();
 
         String tempDoc = doctorName.getText();
-        if (tempDoc != m_doctorName)
+        if (!tempDoc.equals(m_doctorName))
         {
             populateEmployeeID();
             m_doctorName = tempDoc;
@@ -244,11 +256,11 @@ public class MakeAppointment extends javax.swing.JFrame
         String avail = m_time.substring(0, index);
         if (m_loadChart)
         {
-            mgr.markAppointment(patientId, avail, m_id, m_name);
+            mgr.modifyAppopintment(patientId, avail, m_id, m_name);
         }
         else
         {
-            mgr.modifyAppopintment(patientId, avail, m_id, m_name);
+            mgr.markAppointment(patientId, avail, m_id, m_name);
         }
         this.dispose();
     }
@@ -268,7 +280,6 @@ public class MakeAppointment extends javax.swing.JFrame
             dbm = new DatabaseManager();
             m_doctorName = dbm.getLogInInfoData(m_id, 1);
             doctorName.setText(m_doctorName);
-            populateEmployeeID();
             employeeId.setText(m_id);
             ssn.setText(m_ssn);
 
