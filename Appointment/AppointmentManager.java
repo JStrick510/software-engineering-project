@@ -40,8 +40,8 @@ public class AppointmentManager
     {
         doctorsList.put(employeID, new Doctor(employeID));
     }
-    
-    
+
+
     //Method for retreiving Doctor from list based on name
     Doctor getDoctor(String employeID)
     {

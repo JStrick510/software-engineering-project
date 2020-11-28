@@ -1,11 +1,12 @@
- package GUI;
+package GUI;
 
 
- import Database.DatabaseManager;
- import UserInterface.CEOInterface;
- import UserInterface.DoctorInterface;
- import UserInterface.NurseInterface;
- import UserInterface.StaffInterface;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
+import UserInterface.CEOInterface;
+import UserInterface.DoctorInterface;
+import UserInterface.NurseInterface;
+import UserInterface.StaffInterface;
 
 /**
  *
@@ -127,7 +128,9 @@ public class Login extends javax.swing.JFrame
         m_password = password.getText();
 
         dbm = new DatabaseManager();
-        if (m_password.equals(dbm.getLogInInfoData(m_id, 1).trim()))
+        String hashed = Helper.passwordHash(m_password);
+        System.out.println(hashed);
+        if (hashed.equals(dbm.getLogInInfoData(m_id, 1).trim()))
         {
             dbm.addCurrentLogIn(m_id);
         }

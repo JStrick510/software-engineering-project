@@ -1,6 +1,7 @@
- package GUI;
+package GUI;
 
- import Database.DatabaseManager;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
 
 /**
  *
@@ -308,8 +309,7 @@ public class Register extends javax.swing.JFrame
         }
         System.out.println("Selected role: " + role);
         dbm = new DatabaseManager();
-        //TODO: add password hashing
-        dbm.addLogInInfo(m_id, m_password, role, name.toLowerCase());
+        dbm.addLogInInfo(m_id, Helper.passwordHash(m_password), role, name.toLowerCase());
         dbm.closeDB();
         this.dispose();
     }

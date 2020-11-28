@@ -1,7 +1,9 @@
- package UserInterface;
- import Database.DatabaseManager;
- import GUI.PatientSelect;
- import GUI.PatientTreatmentForm;
+package UserInterface;
+
+import Database.DatabaseManager;
+import GUI.MainMenu;
+import GUI.PatientSelect;
+import GUI.PatientTreatmentForm;
 
 /**
  *
@@ -105,7 +107,9 @@ public class NurseInterface extends javax.swing.JFrame
         dbm = new DatabaseManager();
         dbm.removeCurrentLogIn(m_employeeId);
         dbm.closeDB();
-        System.exit(0);
+        MainMenu main = new MainMenu();
+        main.setVisible(true);
+        this.dispose();
     }
 
     private javax.swing.JButton editPatient;

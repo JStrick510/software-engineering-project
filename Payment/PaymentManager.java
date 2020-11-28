@@ -1,6 +1,7 @@
- package Payment;
+package Payment;
 
- import Database.DatabaseManager;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
 
 public class PaymentManager
 {
@@ -15,11 +16,13 @@ public class PaymentManager
     private String m_paymentType;
     private String m_referenceNum;
     private String m_addr;
+    private String m_ssn;
 
     public PaymentManager()
     {
         dbm = new DatabaseManager();
         this.m_patientName = "";
+        this.m_ssn = "";
         this.m_amount = "";
         this.m_date = "";
         this.m_cardNo = "";
@@ -30,10 +33,19 @@ public class PaymentManager
         this.m_addr = "";
     }
 
-    public PaymentManager(String patientName, String amnt, String date, String cardNo, String cvv, String pin, String paymentType, String addr)
+    public PaymentManager(String patientName,
+                          String ssn,
+                          String amnt,
+                          String date,
+                          String cardNo,
+                          String cvv,
+                          String pin,
+                          String paymentType,
+                          String addr)
     {
         dbm = new DatabaseManager();
         this.m_patientName = patientName;
+        this.m_ssn = ssn;
         this.m_amount = amnt;
         this.m_date = date;
         this.m_cardNo = cardNo;
@@ -41,13 +53,19 @@ public class PaymentManager
         this.m_pin = pin;
         this.m_paymentType = paymentType;
         this.m_addr = addr;
+        saveToDatabase();
+    }
+
+    private void saveToDatabase()
+    {
+        BankInterface bank = new BankInterface(m_cardNo, m_cvv, m_pin);
+        m_referenceNum = bank.generateRefNum();
+        dbm.addPaymentInfo(m_referenceNum, m_patientName, m_date, m_amount, m_paymentType, Helper.generateId(m_ssn));
+        dbm.closeDB();
     }
 
     public String retreiveRefNum()
     {
-        BankInterface bank = new BankInterface(m_cardNo, m_cvv, m_pin);
-        m_referenceNum = bank.generateRefNum();
-
         return m_referenceNum;
     }
 
@@ -120,6 +138,4 @@ public class PaymentManager
     {
         this.m_referenceNum = m_referenceNum;
     }
-
-     
 }

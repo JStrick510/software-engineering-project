@@ -10,8 +10,8 @@ import java.io.*;
 PaitentChart: SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID
 TreatmentChart: ChartID, Height, Weight, BloodPressure, VisitReason, TreatmentContent, Prescription, PatientID
 PaymentInfo: ReferenceNumber, Name, Date, Amount, PaymentType, PatientID
-Report: ReportDate, EmployeeID, NumberPatients, AmountEarned
-LogInInfo: EmployeeID, Password, Role
+Report: ReportDate, NumberPatients, AmountEarned
+LogInInfo: EmployeeID, DoctorName, Password, Role
 DoctorSchedule: PatientID, Time, EmployeeID
 */
 
@@ -72,6 +72,11 @@ public class DatabaseManager {
             this.logInInfo = readCSV(logInFile);
         if(doctorScheduleFile.length() != 0)
             this.doctorSchedule = readCSV(doctorScheduleFile);
+    }
+
+    public ArrayList<String[]> getlogInInfo()
+    {
+        return new ArrayList<String[]>(logInInfo);
     }
 
     public void closeDB()
@@ -311,7 +316,7 @@ public class DatabaseManager {
 
     public String getReportData(String identifier, int index)
     {
-        //Report: 0-ReportDate, 1-DoctorName, 2-NumberPatients, 3-AmountEarned
+        //Report: 0-ReportDate, 2-NumberPatients, 3-AmountEarned
         String[] match = null;
 
         for(String[] line : report)
@@ -331,7 +336,7 @@ public class DatabaseManager {
 
     public String getLogInInfoData(String identifier, int index)
     {
-        //LogInInfo: 0-EmployeeID, 1-Password, 2-Role, 3-Name
+        //LogInInfo: 0-EmployeeID, 1-DoctorName, 2-Password, 3-Role
         String[] match = null;
 
         for(String[] line : logInInfo)
@@ -351,12 +356,12 @@ public class DatabaseManager {
 
     public String getEmployeeID(String name)
     {
-        //LogInInfo: 0-EmployeeID, 1-Password, 2-Role, 3-Name
+        //LogInInfo: 0-EmployeeID, 1-Name, 2-Password, 3-Role
         String[] match = null;
 
         for(String[] line : logInInfo)
         {
-            if(line[3].trim().equals(name)) //assuming that all primary keys will be the first item
+            if(line[1].trim().equals(name)) //assuming that all primary keys will be the first item
             {
                 return line[0];
             }
@@ -367,7 +372,7 @@ public class DatabaseManager {
 
     public String getDoctorScheduleData(String identifier, int index)
     {
-        //DoctorSchedule: 0-EmployeeID, 1-Time, 2-PatientID
+        //DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
         String[] match = null;
 
         for(String[] line : doctorSchedule)
@@ -384,14 +389,15 @@ public class DatabaseManager {
         else
             return match[index];
     }
+
     public String[] getDoctorScheduleAvailable(String identifier, int index)
     {
-        //DoctorSchedule: 0-EmployeeID, 1-Time, 2-PatientID
+        //DoctorSchedule: 0-PatientID, 1-Time, 2-EmployeeID
         String[] match = new String[16];
         int i = 0;
         for(String[] line : doctorSchedule)
         {
-            if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            if(line[2].equals(identifier)) //assuming that all primary keys will be the first item
             {
                 match[i] = line[index].trim();
                 i++;
@@ -515,22 +521,21 @@ public class DatabaseManager {
         paymentInfo.add(a);
     }
 
-    public void addReport(String ReportDate, String EmployeeID, String NumberPatients, String AmountEarned)
+    public void addReport(String ReportDate, String NumberPatients, String AmountEarned)
     {
-        String[] a = {ReportDate, EmployeeID, NumberPatients, AmountEarned};
+        String[] a = {ReportDate, NumberPatients, AmountEarned};
         report.add(a);
     }
 
-    public void addLogInInfo(String EmployeeID, String Password, String Role, String Name)
+    public void addLogInInfo(String EmployeeID, String DoctorName, String Password, String Role)
     {
-        String[] a = {EmployeeID, Password, Role, Name};
+        String[] a = {EmployeeID, DoctorName, Password, Role};
         logInInfo.add(a);
     }
 
     public void addDoctorSchedule(String PatientID, String Time, String EmployeeID)
     {
-        //DoctorSchedule: EmployeeID, Time, PatientID
-        String[] a = {EmployeeID, Time,  PatientID};
+        String[] a = {PatientID, Time,  EmployeeID};
         doctorSchedule.add(a);
     }
 

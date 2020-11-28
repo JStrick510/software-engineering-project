@@ -1,10 +1,7 @@
- package UserInterface;
+package UserInterface;
 
- import Database.DatabaseManager;
- import GUI.AppointmentInterface;
- import GUI.PatientChartForm;
- import GUI.PatientSelect;
- import GUI.PaymentInterface;
+import Database.DatabaseManager;
+import GUI.*;
 
 /**
  *
@@ -189,7 +186,9 @@ public class StaffInterface extends javax.swing.JFrame
         dbm = new DatabaseManager();
         dbm.removeCurrentLogIn(m_employeeId);
         dbm.closeDB();
-        System.exit(0);
+        MainMenu main = new MainMenu();
+        main.setVisible(true);
+        this.dispose();
     }
 
     private void viewPatientActionPerformed(java.awt.event.ActionEvent evt)

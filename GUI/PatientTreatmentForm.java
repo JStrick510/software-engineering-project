@@ -1,7 +1,7 @@
- package GUI;
+package GUI;
 
- import Database.DatabaseManager;
- import HCSUtility.Helper;
+import Database.DatabaseManager;
+import HCSUtility.Helper;
 
 import java.util.ArrayList;
 
@@ -270,16 +270,11 @@ public class PatientTreatmentForm extends javax.swing.JFrame
 
     private void setPermissions()
     {
-        if (m_employeeType == "Nurse")
+        if (m_employeeType.equals("Nurse"))
         {
+            System.out.println("Nurse provided");
             treatment.setEditable(false);
             perscription.setEditable(false);
-
-        }
-        else
-        {
-            ErrorScreen error = new ErrorScreen("Invalid Employee Type provided: " + m_employeeType);
-            error.setVisible(true);
         }
     }
 

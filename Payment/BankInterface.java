@@ -1,6 +1,6 @@
- package Payment;
+package Payment;
 
-import java.util.UUID;
+import HCSUtility.Helper;
 
 public class BankInterface
 {
@@ -25,6 +25,6 @@ public class BankInterface
     public String generateRefNum()
     {
         String temp = m_cardNo + m_cvv + m_pin;
-        return UUID.nameUUIDFromBytes(temp.getBytes()).toString();
+        return Helper.generateId(temp);
     }
 }
