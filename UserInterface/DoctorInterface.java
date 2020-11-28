@@ -1,9 +1,10 @@
- package UserInterface;
+package UserInterface;
 
 
- import Database.DatabaseManager;
- import GUI.PatientSelect;
- import GUI.PatientTreatmentForm;
+import Database.DatabaseManager;
+import GUI.MainMenu;
+import GUI.PatientSelect;
+import GUI.PatientTreatmentForm;
 
 /**
  *
@@ -62,13 +63,6 @@ public class DoctorInterface extends javax.swing.JFrame
         jLabel1.setText("Doctor Interface");
 
         addSchedule.setText("Add Schedule");
-        addSchedule.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                addScheduleActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,11 +130,9 @@ public class DoctorInterface extends javax.swing.JFrame
         dbm = new DatabaseManager();
         dbm.removeCurrentLogIn(m_employeeId);
         dbm.closeDB();
-        System.exit(0);
-    }
-
-    private void addScheduleActionPerformed(java.awt.event.ActionEvent evt)
-    {
+        MainMenu main = new MainMenu();
+        main.setVisible(true);
+        this.dispose();
     }
 
     private javax.swing.JButton editChart;

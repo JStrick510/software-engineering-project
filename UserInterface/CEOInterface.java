@@ -1,7 +1,8 @@
- package UserInterface;
+package UserInterface;
 
 
- import Database.DatabaseManager;
+import Database.DatabaseManager;
+import GUI.MainMenu;
 
 /**
  *
@@ -84,7 +85,9 @@ public class CEOInterface extends javax.swing.JFrame
         dbm = new DatabaseManager();
         dbm.removeCurrentLogIn(m_employeeId);
         dbm.closeDB();
-        System.exit(0);
+        MainMenu main = new MainMenu();
+        main.setVisible(true);
+        this.dispose();
     }
 
     private javax.swing.JLabel jLabel1;
