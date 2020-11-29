@@ -9,10 +9,6 @@ public class AppointmentManager
 {
     
 
-
-
-    //TODO: Date class?
-    //TODO: Add functionality for checking/adding appointments for individual Doctor objects
     public AppointmentManager()
     {
 
@@ -67,8 +63,6 @@ public class AppointmentManager
         DatabaseManager DataMan = new DatabaseManager();
         DataMan.deleteDoctorSchedule(patientID);
         DataMan.addDoctorSchedule(patientID, Time, employeeID, patientName);
+        DataMan.closeDB();
     }
-
-
-
 }
