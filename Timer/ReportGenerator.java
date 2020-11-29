@@ -23,7 +23,6 @@ public class ReportGenerator extends TimerTask{
 		
 		DBM.closeDB();
 		
-		System.out.println("test");
 	}
 
 }

@@ -287,6 +287,11 @@ public class DatabaseManager {
     	String[] updated = {current[0], Double.toString(money)};
     	dailyInfo.set(0, updated);
     }
+    
+    public void wipeSchedule()
+    {
+    	this.doctorSchedule.clear();
+    }
 
     public String getPatientChartData(String identifier, int index)
     {

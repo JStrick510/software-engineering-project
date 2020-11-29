@@ -4,17 +4,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.time.LocalTime;
 
-public class ReportManager {
+public class SystemTimer {
 	
 	private ReportGenerator RG = new ReportGenerator();
+	private AppointmentClearer AC = new AppointmentClearer();
 	
-	public ReportManager()
+	public SystemTimer()
 	{
 		//create a new instance of timer class
 		Timer timer = new Timer();
 		
 		//create an instance of task to be scheduled
-		TimerTask task = RG;
+		TimerTask generateReport = RG;
+		TimerTask clearNoShow = AC;
 		
 		int dayMS = 86400000; //24hrs in ms
 		int nineMS = 75600000; //time from 12AM to 9PM in ms
@@ -27,10 +29,11 @@ public class ReportManager {
 			delay = 14400000 - currentTimeMS + nineMS; //four hours left in day after minus the current time which is between 9PM and 12AM plus the time from 12AM to 9PM
 		
 		//scheduling the timer instance
-		timer.schedule(task, delay, dayMS); 
+		timer.schedule(generateReport, delay, dayMS); 
+		timer.schedule(clearNoShow, delay-3600000, dayMS); //minus an hour for 8pm
+		
 		
 		//timer.cancel(); //this is needed at when the program closes to close the timer
 	}
-	
 
 }

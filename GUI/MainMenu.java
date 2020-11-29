@@ -111,7 +111,7 @@ public class MainMenu extends javax.swing.JFrame
 
     public static void main(String args[]) {
     	
-    	ReportManager RM = new ReportManager();
+    	SystemTimer ST = new SystemTimer();
     	
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
