@@ -7,8 +7,7 @@ import java.util.Hashtable;
 
 public class AppointmentManager
 {
-    Hashtable<String, Doctor> doctorsList = new Hashtable<String, Doctor>();
-    Hashtable<String, Patient> patientList = new Hashtable<String, Patient>();
+    
 
 
 
@@ -17,29 +16,6 @@ public class AppointmentManager
     public AppointmentManager()
     {
 
-    }
-    //Method for adding Doctor to the list
-    void addDoctor(String employeID)
-    {
-        doctorsList.put(employeID, new Doctor(employeID));
-    }
-
-
-    //Method for retreiving Doctor from list based on name
-    Doctor getDoctor(String employeID)
-    {
-        return doctorsList.get(employeID);
-
-    }
-    //Method for adding Patient to the list
-    void addPatient(String patientName)
-    {
-        patientList.put(patientName, new Patient(patientName));
-    }
-    // for retreiving patient from the list based on name
-    Patient getPateint(String patientName)
-    {
-        return patientList.get(patientName);
     }
     //Will find all existing appointments in csv file and return an array of times that are currently available
     public String[] checkAvailable(String EmployeeID)
