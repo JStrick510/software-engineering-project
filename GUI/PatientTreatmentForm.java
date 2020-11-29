@@ -314,10 +314,7 @@ public class PatientTreatmentForm extends javax.swing.JFrame
 
     private void reasonMouseClicked(java.awt.event.MouseEvent evt)
     {
-        if (!m_employeeType.equals("Nurse"))
-        {
-            reason.setText("");
-        }
+        reason.setText("");
     }
 
     private void treatmentMouseClicked(java.awt.event.MouseEvent evt)
