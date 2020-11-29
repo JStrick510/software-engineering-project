@@ -1,10 +1,4 @@
-package project1;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.io.*;
+package Database;
 
 /*
 PaitentChart: SSN, PatientID, Email, PhoneNumber, HealthCondition, Name, Address, InsuranceName, ChartID
@@ -13,8 +7,10 @@ PaymentInfo: ReferenceNumber, Name, Date, Amount, PaymentType, PatientID
 Report: ReportDate, NumberPatients, AmountEarned
 LogInInfo: EmployeeID, DoctorName, Password, Role
 DoctorSchedule: PatientID, Time, EmployeeID, Patient Name
-DailyInfo: Patients, Money
 */
+
+import java.io.*;
+import java.util.ArrayList;
 
 public class DatabaseManager {
 
@@ -78,12 +74,12 @@ public class DatabaseManager {
         if(doctorScheduleFile.length() != 0)
             this.doctorSchedule = readCSV(doctorScheduleFile);
         if(dailyInfoFile.length() != 0)
-        	this.dailyInfo = readCSV(dailyInfoFile);
-        
+            this.dailyInfo = readCSV(dailyInfoFile);
+
         if(dailyInfo.isEmpty())
         {
-        	String[] zero = {"0", "0"};
-        	dailyInfo.add(zero);
+            String[] zero = {"0", "0"};
+            dailyInfo.add(zero);
         }
     }
 
@@ -91,10 +87,10 @@ public class DatabaseManager {
     {
         return new ArrayList<String[]>(logInInfo);
     }
-    
+
     public ArrayList<String[]> getReport()
     {
-    	return new ArrayList<String[]>(report);
+        return new ArrayList<String[]>(report);
     }
 
     public void closeDB()
@@ -200,7 +196,7 @@ public class DatabaseManager {
 
             writeCSV("doctorSchedule.csv", doctorScheduleContent);
         }
-        
+
         if(dailyInfo != null) //assuming that databases will never be empty at the end, but just in case
         {
             ArrayList<String> dailyInfoContent = new ArrayList<String>();
@@ -257,40 +253,40 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-    
+
     public String[] getDailyInfo()
     {
         //DailyInfo: 0-Patients, 1-Money
         return dailyInfo.get(0);
     }
-    
+
     public void resetDailyInfo()
     {
-    	String[] zero = {"0", "0"};
-    	dailyInfo.set(0, zero);
+        String[] zero = {"0", "0"};
+        dailyInfo.set(0, zero);
     }
-    
+
     public void increaseDailyVisits()
     {
-    	String[] current = dailyInfo.get(0);
-    	int visits = Integer.parseInt(current[0]);
-    	visits+=1;
-    	String[] updated = {Integer.toString(visits), current[1]};
-    	dailyInfo.set(0, updated);
+        String[] current = dailyInfo.get(0);
+        int visits = Integer.parseInt(current[0]);
+        visits+=1;
+        String[] updated = {Integer.toString(visits), current[1]};
+        dailyInfo.set(0, updated);
     }
-    
+
     public void increaseDailyMoney(double moneyAdd)
     {
-    	String[] current = dailyInfo.get(0);
-    	double money = Double.parseDouble(current[1]);
-    	money+=moneyAdd;
-    	String[] updated = {current[0], Double.toString(money)};
-    	dailyInfo.set(0, updated);
+        String[] current = dailyInfo.get(0);
+        double money = Double.parseDouble(current[1]);
+        money+=moneyAdd;
+        String[] updated = {current[0], Double.toString(money)};
+        dailyInfo.set(0, updated);
     }
-    
+
     public void wipeSchedule()
     {
-    	this.doctorSchedule.clear();
+        this.doctorSchedule.clear();
     }
 
     public String getPatientChartData(String identifier, int index)
@@ -516,6 +512,22 @@ public class DatabaseManager {
         for(String[] line : paymentInfo)
         {
             if(line[0].equals(identifier)) //assuming that all primary keys will be the first item
+            {
+                match = line;
+                break;
+            }
+        }
+
+        return match;
+    }
+
+    public String[] getPaymentInfoLine(String identifier, int index)
+    {
+        String[] match = null;
+
+        for(String[] line : paymentInfo)
+        {
+            if(line[index].equals(identifier)) //assuming that all primary keys will be the first item
             {
                 match = line;
                 break;
