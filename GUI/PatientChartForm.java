@@ -1,7 +1,7 @@
-package GUI;
+ package GUI;
 
-import Database.DatabaseManager;
-import HCSUtility.Helper;
+ import Database.DatabaseManager;
+ import HCSUtility.Helper;
 
 import java.util.ArrayList;
 
@@ -335,7 +335,7 @@ public class PatientChartForm extends javax.swing.JFrame
         dbm.deletePatientChart(m_ssn);
 
         // Format the name and address into a single string
-        String fullName = m_firstName + " " + m_middleInitial + " " + m_firstName;
+        String fullName = m_firstName + " " + m_middleInitial + " " + m_lastName;
         String fullAddress = m_streetAddress + " " + m_city + ", " + m_state + " " + m_zipCode;
 
         // Create unique id's based on the patients ssn and the current time in seconds
